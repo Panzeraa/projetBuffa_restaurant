@@ -3,16 +3,21 @@
     <img alt="Vue logo" src="./assets/logo.png">
 
   </div> -->
-  <Maps/>
+  <div>
+    <RestaurantsList />
+    <Maps />
+  </div>
 </template>
 
 <script>
   import Maps from './components/Maps.vue'
+  import RestaurantsList from './components/RestaurantsList.vue'
 
   export default {
     name: 'app',
     components: {
-      Maps
+      Maps,
+      RestaurantsList
     }
   }
 </script>
