@@ -135,6 +135,7 @@
             <md-table-row slot="md-table-row" slot-scope="{ item }">
                 <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
                 <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{ item.cuisine }}</md-table-cell>
+                <md-table-cell><md-button @click="supprimerRestaurant()"><md-icon md-label="Suppression" md-sort-by="suppressin">delete</md-icon></md-button></md-table-cell>
                 <!-- <md-table-cell md-label="Details"><router-link :to="'restaurant/'+item._id">Details</router-link></md-table-cell> -->
             </md-table-row>
         </md-table>
