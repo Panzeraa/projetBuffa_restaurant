@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="align_center">Maps</h1>
+    <!-- <h1 class="align_center">Maps</h1> -->
     <div id="map" class="map"></div>
   </div>
 </template>
