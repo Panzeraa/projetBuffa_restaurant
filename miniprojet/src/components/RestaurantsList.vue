@@ -19,7 +19,7 @@
                         <div class="md-layout-item md-small-size-100">
                             <label for="nbRestau">Nb de restaurants par page :</label>
                             <input type="range" min=5 max=100 step=1 v-model="pagesize"
-                                v-on:input="getDataFromServer()">
+                                   v-on:input="getDataFromServer()">
                             {{pagesize}}
 
                         </div>
@@ -45,7 +45,7 @@
                                     <!-- <md-field :class="getValidationClass('Name')"> -->
                                     <label for="name">Nom</label>
                                     <md-input name="name" id="name" autocomplete="given-name"
-                                        v-model="restaurantAdd.nom" :disabled="sending" />
+                                              v-model="restaurantAdd.nom" :disabled="sending" />
                                     <!-- <span class="md-error" v-if="!$v.form.firstName.required">The first name is
                                             required</span>
                                         <span class="md-error" v-else-if="!$v.form.firstName.minlength">Invalid first
@@ -57,7 +57,7 @@
                                     <!-- <md-field :class="getValidationClass('cuisine')"> -->
                                     <label for="cuisine">Cuisine</label>
                                     <md-input name="cuisine" id="cuisine" autocomplete="cuisine"
-                                        v-model="restaurantAdd.cuisine" :disabled="sending" />
+                                              v-model="restaurantAdd.cuisine" :disabled="sending" />
                                     <!-- <span class="md-error" v-if="!$v.form.lastName.required">The last name is
                                             required</span>
                                         <span class="md-error" v-else-if="!$v.form.lastName.minlength">Invalid last name</span> -->
@@ -124,7 +124,7 @@
             </md-table-toolbar>
 
             <md-table-empty-state md-label="No users found"
-                :md-description="`No user found for this '${nomRecherche}' query. Try a different search term or create a new user.`">
+                                  :md-description="`No user found for this '${nomRecherche}' query. Try a different search term or create a new user.`">
                 <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
                 <!-- <md-table-empty-state> -->
 
@@ -250,7 +250,9 @@
             },
             pagePrecedente() {
                 console.log("page precedente");
-                this.page--;
+                if(this.page!==0){
+                    this.page--;
+                }
                 this.getDataFromServer();
             },
 

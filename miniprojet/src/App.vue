@@ -5,18 +5,18 @@
   </div> -->
   <div>
     <RestaurantsList />
-    <Maps />
+    <!--<Maps /> -->
   </div>
 </template>
 
 <script>
-  import Maps from './components/Maps.vue'
+  //import Maps from './components/Maps.vue'
   import RestaurantsList from './components/RestaurantsList.vue'
 
   export default {
     name: 'app',
     components: {
-      Maps,
+      //Maps,
       RestaurantsList
     }
   }
