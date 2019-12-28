@@ -1,4 +1,4 @@
-# miniprojet
+# projetbuffa
 
 ## Project setup
 ```
