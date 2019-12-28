@@ -7,7 +7,7 @@
         </p> -->
         <p>
             Nombre de restaurants par page :
-            <input
+            <md-slider
                     type="range"
                     min="1"
                     max="100"
@@ -18,10 +18,8 @@
             {{pagesize}}
         </p>
         <h1>Nombre de restaurants : {{nbRestaurants}}</h1>
-        <button v-on:click="pagePrecedente()" v-bind:disabled="page==0">Précédent</button>
-        <button v-on:click="pageSuivante()" :disabled="page == nbPagesDeResultats">Suivant</button>
 
-        <H1>TABLE VUE-MATERIAL</H1>
+        <!-- <H1>TABLE VUE-MATERIAL</H1> -->
         <md-table v-model="restaurants" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
             <md-table-toolbar>
                 <div class="md-toolbar-section-start">
@@ -36,7 +34,7 @@
             <md-table-empty-state
                     md-label="No users found"
                     :md-description="`No user found for this '${nomRecherche}' query. Try a different search term or create a new user.`">
-
+                    <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
             </md-table-empty-state>
 
 
@@ -49,6 +47,8 @@
                 <md-table-cell md-label="Modifier"><router-link :to="'restaurants/'+item._id">Modifier</router-link></md-table-cell>
             </md-table-row>
         </md-table>
+        <md-button class="md-raised" v-on:click="pagePrecedente()" v-bind:disabled="page==0">Précédent</md-button>
+        <md-button class="md-raised"  v-on:click="pageSuivante()" :disabled="page == nbPagesDeResultats">Suivant</md-button>
     </div>
 </template>
 
