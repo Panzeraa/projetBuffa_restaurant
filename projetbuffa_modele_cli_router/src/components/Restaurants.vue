@@ -1,4 +1,5 @@
 <template>
+
     <div>
         <p>
             Rechercher par nom:
@@ -44,7 +45,8 @@
                 <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
                 <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{ item.cuisine }}</md-table-cell>
                 <md-table-cell md-label="Details"><router-link :to="'restaurants/'+item._id">Details</router-link></md-table-cell>
-                <md-table-cell md-label="Details"><button v-on:click="supprimerRestaurant(item._id)" ><md-icon md-label="Suppression">delete</md-icon></button></md-table-cell>
+                <md-table-cell md-label="Supprimer"><button v-on:click="supprimerRestaurant(item._id)" ><md-icon md-label="Suppression">delete</md-icon></button></md-table-cell>
+                <md-table-cell md-label="Modifier"><router-link :to="'restaurants/'+item._id">Modifier</router-link></md-table-cell>
             </md-table-row>
         </md-table>
     </div>
@@ -53,7 +55,9 @@
 <script>
     export default {
         name: "Restaurants",
-        props: {},
+        props: {
+            isUpdate: Boolean
+        },
         data: function() {
             return {
                 restaurants: [],

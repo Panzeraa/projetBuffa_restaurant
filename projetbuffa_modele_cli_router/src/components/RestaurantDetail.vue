@@ -2,6 +2,21 @@
   <div>
     <h1>Restaurant {{restaurant.name}}</h1>
     <h2>Situé au {{restaurant.address.building}} {{restaurant.address.street}} ,{{restaurant.address.zipcode}} </h2>
+
+    <form v-on:submit="modifierRestaurant(id)">
+      <div class="md-title">Modifier restaurant</div>
+      Nom :
+      <input name="name" id="name" v-model="restaurant.name" /><br>
+      Cuisine:
+      <input name="cuisine" id="cuisine" v-model="restaurant.cuisine" /><br>
+      <p>Address</p>
+      Building : <input name="building" id="building" v-model="restaurant.address.building" /><br>
+      Street : <input name="street" id="street" v-model="restaurant.address.street" /><br>
+      Zipcode : <input name="zipcode" id="zipcode" v-model="restaurant.address.zipcode" /><br>
+      <md-button type="submit" >Modifier restaurant</md-button>
+    </form>
+
+
   </div>
 </template>
 
@@ -20,24 +35,20 @@
       return {
         restaurant: {
           name: null,
+          cuisine: null,
           address : {
             building : null,
             street : null,
             zipcode : null
           }
         },
-        nom: "",
-        cuisine: "",
         apiURL: "http://localhost:8081/api/restaurants"
       };
     },
     mounted() {
       console.log("AVANT AFFICHAGE Resto!");
       //console.log("On va chercher les détails du restaurant id = " + this.$route.params.id);
-
-      // console.log("eeee" + this.$route.params);
       this.getDataFromServer(this.$route.params.id);
-
     },
     methods: {
       async getDataFromServer(id) {
@@ -55,7 +66,35 @@
           console.log("Erreur dans les fetchs GET " + err.msg);
         }
       },
+      async modifierRestaurant(id) {
+        // eviter le comportement par defaut
+        event.preventDefault();
+        console.log(id);
+        let donneesFormulaire = new FormData();
+        donneesFormulaire.append("nom", document.getElementById('name').value);
+        donneesFormulaire.append("cuisine", document.getElementById('cuisine').value);
 
+        try {
+          let url = this.apiURL + "/" + id;
+          let reponseJSON = await fetch(url, {
+            method: "PUT",
+            body: donneesFormulaire
+          });
+          let reponseJS = await reponseJSON.json();
+          console.log(reponseJS.msg);
+
+          this.restaurant.name = document.getElementById('name').value;
+          this.restaurant.cuisine = document.getElementById('cuisine').value;
+          this.restaurant.address.building = document.getElementById('building').value;
+          this.restaurant.address.street = document.getElementById('street').value;
+          this.restaurant.address.zipcode = document.getElementById('zipcode').value;
+
+          this.getDataFromServer(id); // on rafraichit
+        } catch (err) {
+          console.log("Erreur dans le fetchs PUT " + err.msg);
+        }
+
+      }
     }
   };
 </script>
