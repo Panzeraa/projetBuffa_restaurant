@@ -46,4 +46,21 @@
         /* width: 100%; */
         /* margin: -10px; */
     }
+    .float_right{
+        float: right;
+    }
+    .float_left{
+        float: left;
+    }
+    .font_bold{
+        font-weight: bold!important;
+    }
+    .full_height {
+        height: calc(100vh - 48px);
+        /* overflow-y: auto; */
+    }
+    .full_height_max{
+        max-height: calc(100vh - 48px);
+        overflow-y: auto;
+    }
 </style>

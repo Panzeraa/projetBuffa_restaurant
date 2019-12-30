@@ -5,50 +5,80 @@
             Rechercher par nom:
             <input type="text" v-model="nomRecherche" v-on:input="getDataFromServer()" />
         </p> -->
-        <p>
+        <!-- <p>
             Nombre de restaurants par page :
-            <md-slider
-                    type="range"
-                    min="1"
-                    max="100"
-                    value="12"
-                    v-on:input="getDataFromServer()"
-                    v-model="pagesize"
-            />
+            <input type="range" min="1" max="100" value="12" v-on:input="getDataFromServer()" v-model="pagesize" />
             {{pagesize}}
-        </p>
-        <h1>Nombre de restaurants : {{nbRestaurants}}</h1>
+        </p> -->
 
         <!-- <H1>TABLE VUE-MATERIAL</H1> -->
-        <md-table v-model="restaurants" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-            <md-table-toolbar>
-                <div class="md-toolbar-section-start">
-                    <h1 class="md-title">Nom cherche</h1>
-                </div>
+        <div class="md-layout full_height">
 
-                <md-field md-clearable class="md-toolbar-section-end">
-                    <md-input placeholder="Search by name..." v-model="nomRecherche" @input="getDataFromServer()" />
+            <div class="md-layout-item sidebar md-size-15">
+                    <div class="md-title">
+                        Recherche restaurant
+                    </div>
+                <md-field>
+                    <label for="search">Recherche</label>
+                    <md-input name="search" id="search" v-model="nomRecherche" @input="getDataFromServer()" />
                 </md-field>
-            </md-table-toolbar>
+                <!-- <hr> -->
+                <md-field>
+                    <label for="pagesize">Nombre par page</label>
+                    <md-select v-on:input="getDataFromServer()" v-model="pagesize" name="pagesize" id="pagesize">
+                        <md-option value="5">5</md-option>
+                        <md-option value="10">10</md-option>
+                        <md-option value="25">25</md-option>
+                        <md-option value="50">50</md-option>
+                        <md-option value="75">75</md-option>
+                        <md-option value="100">100</md-option>
+                    </md-select>
+                </md-field>
 
-            <md-table-empty-state
-                    md-label="No users found"
-                    :md-description="`No user found for this '${nomRecherche}' query. Try a different search term or create a new user.`">
-                    <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
-            </md-table-empty-state>
+                <div class="to_bottom">{{nbRestaurants}} restaurants</div>
+
+            </div>
+            <div class="md-layout-item md-size-85">
+                <md-table class="width_table full_height" md-height="100%" v-model="restaurants" md-sort="name"
+                    md-sort-order="asc" md-card md-fixed-header>
+                    <md-table-toolbar style="display: inline-block; margin-top: 15px; text-align: center;">
+                        <md-button class="md-raised" v-on:click="pagePrecedente()" v-bind:disabled="page==0">Précédent
+                        </md-button>
+                        <md-button class="color_black" disabled>{{page}}</md-button>
+
+                        <md-button class="md-raised" v-on:click="pageSuivante()" :disabled="page == nbPagesDeResultats">
+                            Suivant
+                        </md-button>
+                    </md-table-toolbar>
+
+                    <md-table-empty-state md-label="No users found"
+                        :md-description="`No user found for this '${nomRecherche}' query. Try a different search term or create a new user.`">
+                        <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+                    </md-table-empty-state>
 
 
 
-            <md-table-row slot="md-table-row" slot-scope="{ item }">
-                <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
-                <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{ item.cuisine }}</md-table-cell>
-                <md-table-cell md-label="Details"><router-link :to="'restaurants/'+item._id">Details</router-link></md-table-cell>
-                <md-table-cell md-label="Supprimer"><button v-on:click="supprimerRestaurant(item._id)" ><md-icon md-label="Suppression">delete</md-icon></button></md-table-cell>
-                <md-table-cell md-label="Modifier"><router-link :to="'restaurants/'+item._id">Modifier</router-link></md-table-cell>
-            </md-table-row>
-        </md-table>
-        <md-button class="md-raised" v-on:click="pagePrecedente()" v-bind:disabled="page==0">Précédent</md-button>
-        <md-button class="md-raised"  v-on:click="pageSuivante()" :disabled="page == nbPagesDeResultats">Suivant</md-button>
+                    <md-table-row slot="md-table-row" slot-scope="{ item }">
+                        <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
+                        <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{ item.cuisine }}</md-table-cell>
+                        <md-table-cell md-label="Details">
+                            <router-link :to="'restaurants/'+item._id">Details</router-link>
+                        </md-table-cell>
+                        <md-table-cell md-label="Supprimer"><button v-on:click="supprimerRestaurant(item._id)">
+                                <md-icon md-label="Suppression">delete</md-icon>
+                            </button></md-table-cell>
+                        <md-table-cell md-label="Modifier">
+                            <router-link :to="'restaurants/'+item._id">Modifier</router-link>
+                        </md-table-cell>
+                    </md-table-row>
+                </md-table>
+            </div>
+        </div>
+
+
+        <!-- Nombre de restaurants par page :
+        <input type="range" min="1" max="100" value="12" v-on:input="getDataFromServer()" v-model="pagesize" />
+        {{pagesize}} -->
     </div>
 </template>
 
@@ -58,14 +88,14 @@
         props: {
             isUpdate: Boolean
         },
-        data: function() {
+        data: function () {
             return {
                 restaurants: [],
                 nbRestaurants: 0,
                 nom: "",
                 cuisine: "",
                 page: 0,
-                pagesize:10,
+                pagesize: 50,
                 nomRecherche: "",
                 nbPagesDeResultats: 0,
                 apiURL: "http://localhost:8081/api/restaurants"
@@ -141,5 +171,39 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .color_black {
+        color: black !important;
+    }
 
+
+
+
+    .width_table {
+        /* border-radius: 15px; */
+        /* margin: 0 auto; */
+        /* margin-top: 25px; */
+        /* text-align: center; */
+
+        /* width: 70vw; */
+    }
+
+
+
+    .height_table {
+        height: unset;
+        max-height: unset;
+    }
+
+    .sidebar {
+        /* max-width: 15vw; */
+        padding: 10px;
+    }
+
+    .to_bottom {
+        padding: 8px;
+        font-size: 15px;
+        /* text-align: center; */
+        position: absolute;
+        bottom: 0;
+    }
 </style>

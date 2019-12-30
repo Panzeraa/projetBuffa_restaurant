@@ -1,38 +1,46 @@
 <template>
   <div>
     <div class="md-layout">
-      <div class="md-layout-item">
-        <div class="container_details talign_center" v-if="restaurant.name != null">
+      <div class="md-layout-item full_height_max md-scrollbar">
+        <div class="container_details" v-if="restaurant.name != null">
+          <md-card>
+            <md-card-header>
+              <div class="md-title">Informations</div>
+            </md-card-header>
+      
+            <md-card-content>
 
-          <div class="md-display-2 color_black talign_center">{{restaurant.name}}</div>
-          <br>
-          <div class="md-display-1 talign_center mtop">Situé au {{restaurant.address.building}} {{restaurant.address.street}}
-            ,{{restaurant.address.zipcode}}</div>
-          <br>
-          <!-- <div class="md-subheading mtop">Nom : <div class="md-headline">{{restaurant.name}}</div></div>
-          <br>
-          <div class="md-subheading ">Cuisine : <div class="md-headline">{{restaurant.cuisine}}</div></div>
-          <br>
-          <div class="md-display-1 talign_center mtop">Address</div>
-          <br>
-          <div class="md-subheading mtop">Building : <div class="md-headline">{{restaurant.address.building}}</div></div>
-          <br>
-          <div class="md-subheading ">Street : <div class="md-headline">{{restaurant.address.street}}</div></div>
-          <br>
-          <div class="md-subheading ">Zipcode : <div class="md-headline">{{restaurant.address.zipcode}}</div></div> -->
+              <div class="md-display-1 color_black talign_center">{{restaurant.name}}</div>
+              <br>
+              <div class="md-display-0 talign_center">Situé au {{restaurant.address.building}} {{restaurant.address.street}}
+                ,{{restaurant.address.zipcode}}</div>
+              <br>
+              <!-- <div class="md-subheading mtop">Nom : <div class="md-headline">{{restaurant.name}}</div></div>
+              <br>
+              <div class="md-subheading ">Cuisine : <div class="md-headline">{{restaurant.cuisine}}</div></div>
+              <br>
+              <div class="md-display-1 talign_center mtop">Address</div>
+              <br>
+              <div class="md-subheading mtop">Building : <div class="md-headline">{{restaurant.address.building}}</div></div>
+              <br>
+              <div class="md-subheading ">Street : <div class="md-headline">{{restaurant.address.street}}</div></div>
+              <br>
+              <div class="md-subheading ">Zipcode : <div class="md-headline">{{restaurant.address.zipcode}}</div></div> -->
+    
+    
+              <div class="md-subheading mtop ">Nom : {{restaurant.name}}</div>
+              <br>
+              <div class="md-subheading ">Cuisine : {{restaurant.cuisine}}</div>
+              <br>
+              <div class="md-display-1 talign_center mtop">Address</div>
+              <br>
+              <div class="md-subheading mtop ">Building : {{restaurant.address.building}}</div>
+              <br>
+              <div class="md-subheading ">Street : {{restaurant.address.street}}</div>
+              <br>
+              <div class="md-subheading ">Zipcode : {{restaurant.address.zipcode}}</div>            </md-card-content>
+          </md-card>
 
-
-          <div class="md-subheading mtop">Nom : {{restaurant.name}}</div>
-          <br>
-          <div class="md-subheading ">Cuisine : {{restaurant.cuisine}}</div>
-          <br>
-          <div class="md-display-1 talign_center mtop">Address</div>
-          <br>
-          <div class="md-subheading mtop">Building : {{restaurant.address.building}}</div>
-          <br>
-          <div class="md-subheading ">Street : {{restaurant.address.street}}</div>
-          <br>
-          <div class="md-subheading ">Zipcode : {{restaurant.address.zipcode}}</div>
 
 
           <!-- <h1>Restaurant {{restaurant.name}}</h1> -->
@@ -52,8 +60,10 @@
             <md-button type="submit">Modifier restaurant</md-button>
           </form> -->
           <div>
-            <h1 class="">Notes</h1>
             <md-table v-model="restaurant.grades" md-sort="date" md-sort-order="asc" md-card>
+              <md-table-toolbar>
+                <h1 class="md-title">Notes</h1>
+              </md-table-toolbar>
               <md-table-row slot="md-table-row" slot-scope="{ item }">
                 <md-table-cell md-label="Date" md-sort-by="date">{{ item.date }}</md-table-cell>
                 <md-table-cell md-label="Grade" md-sort-by="grade">{{ item.grade }}</md-table-cell>
@@ -64,7 +74,7 @@
         </div>
         <div class="container_details talign_center" v-if="restaurant.name == null">
 
-          <md-progress-spinner :md-diameter="100" :md-stroke="10" md-mode="indeterminate"></md-progress-spinner>
+          <md-progress-spinner :md-diameter="100" :md-stroke="10" md-mode="indeterminate" class="spinner_wait"></md-progress-spinner>
         </div>
       </div>
       <div class="md-layout-item">
@@ -125,7 +135,7 @@
           if (this.map != null) {
             this.map.setView([this.restaurant.address.coord[1], this.restaurant.address.coord[0]], 4);
             this.L.marker([this.restaurant.address.coord[1], this.restaurant.address.coord[0]]).addTo(this.map);
-            setTimeout(this.flyto, 1000);
+            setTimeout(this.flyto, 500);
             // this.map.flyTo([this.restaurant.address.coord[1], this.restaurant.address.coord[0]], 17, {duration: 2});
             // .setView([this.restaurant.address.coord[1], this.restaurant.address.coord[0]], 18, {animate: true, duration: 1});
 
@@ -164,7 +174,7 @@
 
       },
       flyto() {
-        this.map.flyTo([this.restaurant.address.coord[1], this.restaurant.address.coord[0]], 17, { duration: 1, easeLinearity: 0.05});
+        this.map.flyTo([this.restaurant.address.coord[1], this.restaurant.address.coord[0]], 17, { duration: 2, easeLinearity: 0.05});
       },
       initMap() {
 
@@ -191,6 +201,12 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .md-card {
+    /* width: 85%; */
+    margin: 15px;
+    /* display: inline-block; */
+    /* vertical-align: top; */
+  }
   .container_details {
     margin-top: 35px;
     margin-bottom: 35px;
@@ -208,4 +224,9 @@
     margin-top: 10px;
   }
 
+.spinner_wait{
+  position: absolute; 
+  top: 50%; left: 25%;
+  transform: translate(-50%, -50%);
+}
 </style>
