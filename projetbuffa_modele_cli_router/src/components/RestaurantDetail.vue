@@ -2,7 +2,7 @@
   <div>
     <div class="md-layout">
       <div class="md-layout-item full_height_max md-scrollbar">
-        <div class="container_details" v-if="restaurant.name != null">
+        <div v-if="restaurant.name != null">
           <md-card>
             <md-card-header>
               <div class="md-title">Informations</div>
@@ -65,7 +65,7 @@
                 <h1 class="md-title">Notes</h1>
               </md-table-toolbar>
               <md-table-row slot="md-table-row" slot-scope="{ item }">
-                <md-table-cell md-label="Date" md-sort-by="date">{{ item.date }}</md-table-cell>
+                <md-table-cell md-label="Date" md-sort-by="date">{{ item.date | date }}</md-table-cell>
                 <md-table-cell md-label="Grade" md-sort-by="grade">{{ item.grade }}</md-table-cell>
                 <md-table-cell md-label="Score" md-sort-by="score">{{ item.score }}</md-table-cell>
               </md-table-row>
