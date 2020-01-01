@@ -7,20 +7,19 @@
 </template>
 
 <script>
-
-export default {
-    name: "app",
-    components: {
-    },
-    data: function() {
-        return {
-            nom: "buffa"
-        };
-    },
-    mounted()  {
-        console.log("avant affichage");
-    }
-};
+    export default {
+        name: "app",
+        components: {
+        },
+        data: function() {
+            return {
+                nom: "buffa"
+            };
+        },
+        mounted()  {
+            console.log("avant affichage");
+        }
+    };
 </script>
 
 <style>
@@ -31,5 +30,14 @@ export default {
         text-align: center;
         color: #2c3e50;
         margin-top: 60px;
+    }
+    .map {
+        /* position: absolute; */
+        height: 50vh;
+        /* top: 0; right: 0; bottom: 0; left: 0; */
+        /* width: 50vw; */
+        /* height: 100%; */
+        /* width: 100%; */
+        /* margin: -10px; */
     }
 </style>
