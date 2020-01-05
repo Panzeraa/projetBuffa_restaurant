@@ -39,7 +39,7 @@
     .map {
         /* position: absolute; */
         /* height: 50vh; */
-        height: calc(100vh - 48px);
+        height: calc(100vh - 48px - 30px);
         /* top: 0; right: 0; bottom: 0; left: 0; */
         /* width: 50vw; */
         /* height: 100%; */

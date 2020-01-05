@@ -15,10 +15,12 @@
         <div class="md-layout full_height">
 
             <div class="md-layout-item sidebar md-size-15">
-                    <div class="md-title">
-                        Recherche restaurant
-                    </div>
-                <md-field>
+                <div class="md-title">
+                    Outils restaurant
+                </div>
+
+                <!-- <md-button class="md-raised">Ajouter restaurant</md-button> -->
+                <md-field md-clearable>
                     <label for="search">Recherche</label>
                     <md-input name="search" id="search" v-model="nomRecherche" @input="getDataFromServer()" />
                 </md-field>
@@ -34,44 +36,60 @@
                         <md-option value="100">100</md-option>
                     </md-select>
                 </md-field>
+                <p style="text-align: center;">
+                    <md-button class="md-icon-button md-raised md-button_add" v-on:click="displayList()"
+                        v-bind:class="{ 'md-accent': !showList}">
+                        <div class="button_add" v-bind:class="{ displayed_add: !showList}">
+                            <md-icon>add</md-icon>
+                        </div>
+                    </md-button>
+                </p>
 
                 <div class="to_bottom">{{nbRestaurants}} restaurants</div>
 
             </div>
             <div class="md-layout-item md-size-85">
-                <md-table class="width_table full_height" md-height="100%" v-model="restaurants" md-sort="name"
-                    md-sort-order="asc" md-card md-fixed-header>
-                    <md-table-toolbar style="display: inline-block; margin-top: 15px; text-align: center;">
-                        <md-button class="md-raised" v-on:click="pagePrecedente()" v-bind:disabled="page==0">Précédent
-                        </md-button>
-                        <md-button class="color_black" disabled>{{page}}</md-button>
+                <div v-show="showList">
+                    <md-table class="width_table full_height" md-height="100%" v-model="restaurants" md-sort="name"
+                        md-sort-order="asc" md-card md-fixed-header>
+                        <md-table-toolbar
+                            style="display: inline-block; margin-top: 10px; text-align: center;  margin-bottom: -20px">
+                            <md-button class="md-raised" v-on:click="pagePrecedente()" v-bind:disabled="page==0">
+                                Précédent
+                            </md-button>
+                            <md-button class="color_black" disabled>{{page}}</md-button>
 
-                        <md-button class="md-raised" v-on:click="pageSuivante()" :disabled="page == nbPagesDeResultats">
-                            Suivant
-                        </md-button>
-                    </md-table-toolbar>
+                            <md-button class="md-raised" v-on:click="pageSuivante()"
+                                :disabled="page == nbPagesDeResultats">
+                                Suivant
+                            </md-button>
+                        </md-table-toolbar>
 
-                    <md-table-empty-state md-label="No users found"
-                        :md-description="`No user found for this '${nomRecherche}' query. Try a different search term or create a new user.`">
-                        <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
-                    </md-table-empty-state>
+                        <md-table-empty-state md-label="No users found"
+                            :md-description="`No user found for this '${nomRecherche}' query. Try a different search term or create a new user.`">
+                            <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+                        </md-table-empty-state>
 
 
 
-                    <md-table-row slot="md-table-row" slot-scope="{ item }">
-                        <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
-                        <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{ item.cuisine }}</md-table-cell>
-                        <md-table-cell md-label="Details">
-                            <router-link :to="'restaurants/'+item._id">Details</router-link>
-                        </md-table-cell>
-                        <md-table-cell md-label="Supprimer"><button v-on:click="supprimerRestaurant(item._id)">
-                                <md-icon md-label="Suppression">delete</md-icon>
-                            </button></md-table-cell>
-                        <md-table-cell md-label="Modifier">
-                            <router-link :to="'restaurants/'+item._id">Modifier</router-link>
-                        </md-table-cell>
-                    </md-table-row>
-                </md-table>
+                        <md-table-row slot="md-table-row" slot-scope="{ item }">
+                            <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
+                            <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{ item.cuisine }}</md-table-cell>
+                            <md-table-cell md-label="Details">
+                                <router-link :to="'restaurants/'+item._id">Details</router-link>
+                            </md-table-cell>
+                            <md-table-cell md-label="Supprimer"><button v-on:click="supprimerRestaurant(item._id)">
+                                    <md-icon md-label="Suppression">delete</md-icon>
+                                </button></md-table-cell>
+                            <md-table-cell md-label="Modifier">
+                                <router-link :to="'restaurants/'+item._id">Modifier</router-link>
+                            </md-table-cell>
+                        </md-table-row>
+                    </md-table>
+                </div>
+                <div v-if="!showList">
+                    <RestaurantAdd class="open_restauAdd"></RestaurantAdd>
+                </div>
             </div>
         </div>
 
@@ -83,8 +101,13 @@
 </template>
 
 <script>
+    import RestaurantAdd from './RestaurantAdd.vue'
+
     export default {
         name: "Restaurants",
+        components: {
+            RestaurantAdd
+        },
         props: {
             isUpdate: Boolean
         },
@@ -98,7 +121,8 @@
                 pagesize: 50,
                 nomRecherche: "",
                 nbPagesDeResultats: 0,
-                apiURL: "http://localhost:8081/api/restaurants"
+                apiURL: "http://localhost:8081/api/restaurants",
+                showList: true
             };
         },
         mounted() {
@@ -106,6 +130,9 @@
             this.getDataFromServer();
         },
         methods: {
+            displayList() {
+                this.showList = !this.showList;
+            },
             async getDataFromServer() {
                 // ici on fait un fetch pour récupérer des
                 // restaurants sur le serveur.
@@ -205,5 +232,50 @@
         /* text-align: center; */
         position: absolute;
         bottom: 0;
+    }
+
+    .button_add {
+        /* transform-origin: 50% 50%; */
+        transition: all 200ms ease;
+    }
+
+    .displayed_add {
+        /* -webkit-animation: rotating 0.1s ease 1 ; */
+        /* transition: all 200ms ease; */
+        -webkit-transform: rotate(45deg);
+        /* background-color: red; */
+    }
+
+    .md-button_add {
+        transition: all 200ms ease;
+    }
+
+    .open_restauAdd {
+        /* animation-duration: 500ms;
+        animation-name: transition; */
+        /* opacity: 0; */
+        /* animation: transition 1s ease-in-out 2s forwards; */
+    }
+
+    @keyframes transition {
+        from {
+            /* margin-left: -700px; */
+            opacity: 0;
+        }
+
+        to {
+            /* margin-left: 0; */
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes open {
+        from {
+            width: 0%
+        }
+
+        to {
+            width: 100%
+        }
     }
 </style>

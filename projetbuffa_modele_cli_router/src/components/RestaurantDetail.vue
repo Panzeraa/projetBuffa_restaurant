@@ -7,12 +7,13 @@
             <md-card-header>
               <div class="md-title">Informations</div>
             </md-card-header>
-      
+
             <md-card-content>
 
               <div class="md-display-1 color_black talign_center">{{restaurant.name}}</div>
               <br>
-              <div class="md-display-0 talign_center">Situé au {{restaurant.address.building}} {{restaurant.address.street}}
+              <div class="md-display-0 talign_center">Situé au {{restaurant.address.building}}
+                {{restaurant.address.street}}
                 ,{{restaurant.address.zipcode}}</div>
               <br>
               <!-- <div class="md-subheading mtop">Nom : <div class="md-headline">{{restaurant.name}}</div></div>
@@ -26,8 +27,8 @@
               <div class="md-subheading ">Street : <div class="md-headline">{{restaurant.address.street}}</div></div>
               <br>
               <div class="md-subheading ">Zipcode : <div class="md-headline">{{restaurant.address.zipcode}}</div></div> -->
-    
-    
+
+
               <div class="md-subheading mtop ">Nom : {{restaurant.name}}</div>
               <br>
               <div class="md-subheading ">Cuisine : {{restaurant.cuisine}}</div>
@@ -38,7 +39,8 @@
               <br>
               <div class="md-subheading ">Street : {{restaurant.address.street}}</div>
               <br>
-              <div class="md-subheading ">Zipcode : {{restaurant.address.zipcode}}</div>            </md-card-content>
+              <div class="md-subheading ">Zipcode : {{restaurant.address.zipcode}}</div>
+            </md-card-content>
           </md-card>
 
 
@@ -65,7 +67,7 @@
                 <h1 class="md-title">Notes</h1>
               </md-table-toolbar>
               <md-table-row slot="md-table-row" slot-scope="{ item }">
-                <md-table-cell md-label="Date" md-sort-by="date">{{ item.date | date }}</md-table-cell>
+                <md-table-cell md-label="Date" md-sort-by="date">{{ item.date }}</md-table-cell>
                 <md-table-cell md-label="Grade" md-sort-by="grade">{{ item.grade }}</md-table-cell>
                 <md-table-cell md-label="Score" md-sort-by="score">{{ item.score }}</md-table-cell>
               </md-table-row>
@@ -74,11 +76,17 @@
         </div>
         <div class="container_details talign_center" v-if="restaurant.name == null">
 
-          <md-progress-spinner :md-diameter="100" :md-stroke="10" md-mode="indeterminate" class="spinner_wait"></md-progress-spinner>
+          <md-progress-spinner :md-diameter="100" :md-stroke="10" md-mode="indeterminate" class="spinner_wait">
+          </md-progress-spinner>
         </div>
       </div>
       <div class="md-layout-item">
-        <div id="map" class="map"></div>
+        <md-card>
+
+          <md-card-content class="custom_card">
+            <div id="map" class="map"></div>
+          </md-card-content>
+        </md-card>
       </div>
     </div>
   </div>
@@ -174,7 +182,7 @@
 
       },
       flyto() {
-        this.map.flyTo([this.restaurant.address.coord[1], this.restaurant.address.coord[0]], 17, { duration: 2, easeLinearity: 0.05});
+        this.map.flyTo([this.restaurant.address.coord[1], this.restaurant.address.coord[0]], 17, { duration: 2, easeLinearity: 0.05 });
       },
       initMap() {
 
@@ -201,12 +209,17 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .md-card {
+  .custom_card {
+    padding: 0px;
+  }
+
+  .md-card {
     /* width: 85%; */
     margin: 15px;
     /* display: inline-block; */
     /* vertical-align: top; */
   }
+
   .container_details {
     margin-top: 35px;
     margin-bottom: 35px;
@@ -216,17 +229,19 @@
     color: black;
   }
 
-  .talign_center{
+  .talign_center {
     width: 100%;
     text-align: center;
   }
-  .mtop{
+
+  .mtop {
     margin-top: 10px;
   }
 
-.spinner_wait{
-  position: absolute; 
-  top: 50%; left: 25%;
-  transform: translate(-50%, -50%);
-}
+  .spinner_wait {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+  }
 </style>
