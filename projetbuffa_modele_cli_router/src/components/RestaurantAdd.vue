@@ -12,7 +12,7 @@
                         <form>
                             <div class="md-layout md-gutter">
                                 <div class="md-layout-item md-small-size-100">
-                                    <md-field>
+                                    <md-field md-clearable>
                                         <label for="restaurant_name">Name</label>
                                         <md-input name="restaurant_name" id="restaurant_name"
                                             v-model="restaurantAdd.name" />
@@ -20,7 +20,7 @@
                                 </div>
 
                                 <div class="md-layout-item md-small-size-100">
-                                    <md-field>
+                                    <md-field md-clearable>
                                         <label for="restaurant_cuisine">Cuisine</label>
                                         <md-input name="restaurant_cuisine" id="restaurant_cuisine"
                                             v-model="restaurantAdd.cuisine" />
@@ -29,7 +29,7 @@
                             </div>
                             <div class="md-layout md-gutter">
                                 <div class="md-layout-item md-small-size-100">
-                                    <md-field>
+                                    <md-field md-clearable>
                                         <label for="restaurant_building">Numero</label>
                                         <md-input name="restaurant_building" id="restaurant_building"
                                             v-model="restaurantAdd.address.building" />
@@ -37,21 +37,21 @@
                                 </div>
 
                                 <div class="md-layout-item md-small-size-100">
-                                    <md-field>
+                                    <md-field md-clearable>
                                         <label for="restaurant_street">Adresse</label>
                                         <md-input name="restaurant_street" id="restaurant_street"
                                             v-model="restaurantAdd.address.street" />
                                     </md-field>
                                 </div>
                                 <div class="md-layout-item md-small-size-100">
-                                    <md-field>
+                                    <md-field md-clearable>
                                         <label for="restaurant_zipcode">Code postale</label>
                                         <md-input name="restaurant_zipcode" id="restaurant_zipcode"
                                             v-model="restaurantAdd.address.zipcode" />
                                     </md-field>
                                 </div>
                                 <div class="md-layout-item md-small-size-100">
-                                    <md-field>
+                                    <md-field md-clearable>
                                         <label for="restaurant_borough">Ville</label>
                                         <md-input name="restaurant_borough" id="restaurant_borough"
                                             v-model="restaurantAdd.borough" />
@@ -60,7 +60,7 @@
                             </div>
                             <div class="md-layout md-gutter">
                                 <div class="md-layout-item md-small-size-100">
-                                    <md-field>
+                                    <md-field md-clearable>
                                         <label for="restaurant_latitude">Latitude</label>
                                         <md-input name="restaurant_latitude" id="restaurant_latitude"
                                             v-model="restaurantAdd.address.lat" />
@@ -68,7 +68,7 @@
                                 </div>
 
                                 <div class="md-layout-item md-small-size-100">
-                                    <md-field>
+                                    <md-field md-clearable>
                                         <label for="restaurant_longitudee">Longitude</label>
                                         <md-input name="restaurant_longitudee" id="restaurant_longitudee"
                                             v-model="restaurantAdd.address.lon" />
