@@ -5,7 +5,28 @@
             <div class="md-layout-item">
                 <md-card>
                     <md-card-header>
-                        <div class="md-title">Ajouter un restaurant</div>
+                        <div class="md-title">Recherche par adresse</div>
+                    </md-card-header>
+
+                    <md-card-content>
+                        <form>
+                            <md-field md-clearable>
+                                <label for="adresse_search">Adresse</label>
+                                <md-input name="adresse_search" id="adresse_search" v-model="adresse_search"
+                                    v-on:keyup="delaySearchAddress()" />
+                                <span class="md-helper-text">Tout les éléments sont séparés par des espaces</span>
+                            </md-field>
+
+                        </form>
+                        <!-- lat : {{latAdd}}, lon : {{lonAdd}} -->
+                    </md-card-content>
+                    <!-- <md-card-actions>
+                        <md-button type="submit" class="md-primary">Chercher</md-button>
+                    </md-card-actions> -->
+                </md-card>
+                <md-card>
+                    <md-card-header>
+                        <div class="md-title">Informations</div>
                     </md-card-header>
 
                     <md-card-content>
@@ -54,23 +75,23 @@
                                     <md-field md-clearable>
                                         <label for="restaurant_borough">Ville</label>
                                         <md-input name="restaurant_borough" id="restaurant_borough"
-                                            v-model="restaurantAdd.borough" />
+                                            v-model="restaurantAdd.borough" v-on:keyup="delaySearch()" />
                                     </md-field>
                                 </div>
                             </div>
                             <div class="md-layout md-gutter">
                                 <div class="md-layout-item md-small-size-100">
-                                    <md-field md-clearable>
+                                    <md-field>
                                         <label for="restaurant_latitude">Latitude</label>
-                                        <md-input name="restaurant_latitude" id="restaurant_latitude"
+                                        <md-input disabled name="restaurant_latitude" id="restaurant_latitude"
                                             v-model="restaurantAdd.address.lat" />
                                     </md-field>
                                 </div>
 
                                 <div class="md-layout-item md-small-size-100">
-                                    <md-field md-clearable>
+                                    <md-field>
                                         <label for="restaurant_longitudee">Longitude</label>
-                                        <md-input name="restaurant_longitudee" id="restaurant_longitudee"
+                                        <md-input disabled name="restaurant_longitudee" id="restaurant_longitudee"
                                             v-model="restaurantAdd.address.lon" />
                                     </md-field>
                                 </div>
@@ -80,7 +101,7 @@
                     </md-card-content>
                     <md-card-actions>
                         <md-button>Ajouter (ne fonctionne pas)</md-button>
-                      </md-card-actions>
+                    </md-card-actions>
                 </md-card>
             </div>
             <div class="md-layout-item">
@@ -93,6 +114,10 @@
                 </md-card>
             </div>
         </div>
+        <md-snackbar :md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
+            <span>Aucune réponse</span>
+            <md-button class="md-accent" @click="showSnackbar = false">Fermer</md-button>
+        </md-snackbar>
     </div>
 </template>
 
@@ -109,7 +134,10 @@
         },
         data: function () {
             return {
+                showSnackbar: false,
+
                 L: null,
+                adresse_search: null,
                 restaurantAdd: {
                     name: null,
                     cuisine: null,
@@ -122,8 +150,11 @@
                         lon: null
                     }
                 },
+                apiURLNominatimSearch: "https://nominatim.openstreetmap.org/search?q=",
                 apiURLNominatim: "https://nominatim.openstreetmap.org/reverse?format=jsonv2&",
                 apiURL: "http://localhost:8081/api/restaurants",
+                timerSearch: null,
+                timerSearchAddress: null,
                 mapAdd: null,
                 markerClick: null,
                 tileLayer: null,
@@ -180,7 +211,7 @@
                 }
             },
             flyto() {
-                this.map.flyTo([this.restaurant.address.coord[1], this.restaurant.address.coord[0]], 17, { duration: 2, easeLinearity: 0.05 });
+                this.mapAdd.flyTo([this.restaurant.address.coord[1], this.restaurant.address.coord[0]], 17, { duration: 2, easeLinearity: 0.05 });
             },
             async getAdressefromLatLng(latlng) {
                 //this.restaurants.splice(index, 1);
@@ -204,13 +235,103 @@
                     else if (reponseJS.address.pedestrian != null)
                         this.restaurantAdd.address.street = reponseJS.address.pedestrian;
 
-                    if(reponseJS.address.restaurant != null)
+                    if (reponseJS.address.restaurant != null)
                         this.restaurantAdd.name = reponseJS.address.restaurant;
                     console.log(reponseJS);
                 } catch (err) {
                     console.log("Erreur dans le fetchs get Nominatim " + err.msg);
                 }
             },
+            delaySearch() {
+                clearTimeout(this.timerSearch);
+                this.timerSearch = setTimeout(this.searchVille, 1000);
+            },
+            delaySearchAddress() {
+                clearTimeout(this.timerSearchAddress);
+                this.timerSearchAddress = setTimeout(this.searchInfoAddress, 1000);
+            },
+            async searchVille() {
+                console.log("recherche en cours");
+                // &format=json
+                try {
+                    let url = this.apiURLNominatimSearch + this.restaurantAdd.borough + "&format=json";
+                    let reponseJSON = await fetch(url, {
+                        method: "GET"
+                    });
+                    let reponseJS = await reponseJSON.json();
+                    if (reponseJS.length > 0) {
+                        console.log(reponseJS[0].boundingbox);
+                        var corner1 = this.L.latLng(reponseJS[0].boundingbox[0], reponseJS[0].boundingbox[2]),
+                            corner2 = this.L.latLng(reponseJS[0].boundingbox[1], reponseJS[0].boundingbox[3]);
+                        this.mapAdd.fitBounds([corner1, corner2]);
+                    }
+                    console.log(reponseJS);
+                } catch (err) {
+                    console.log("Erreur dans le fetchs get Nominatim " + err.msg);
+                }
+                console.log("Ville recherché");
+            },
+            async searchInfoAddress() {
+                console.log("recherche en cours");
+                // &format=json
+                try {
+                    var elements = this.adresse_search.split(' ');
+                    let url = this.apiURLNominatimSearch;
+                    console.log(elements);
+                    for (var i = 0; i < elements.length; i++) {
+                        url += elements[i];
+                        if (i < elements.length - 1)
+                            url += "+"
+                    }
+                    url += "&format=json&addressdetails=1";
+                    // console.log(url);
+                    let reponseJSON = await fetch(url, {
+                        method: "GET"
+                    });
+                    let reponseJS = await reponseJSON.json();
+                    if (reponseJS.length > 0) {
+                        // console.log(reponseJS[0].boundingbox);
+                        var corner1 = this.L.latLng(reponseJS[0].boundingbox[0], reponseJS[0].boundingbox[2]),
+                            corner2 = this.L.latLng(reponseJS[0].boundingbox[1], reponseJS[0].boundingbox[3]);
+                        this.mapAdd.fitBounds([corner1, corner2]);
+                        if (reponseJS[0].address.house_number != null) {
+                            this.displayMarker([reponseJS[0].lat, reponseJS[0].lon]);
+
+                            this.restaurantAdd.address.lat = reponseJS[0].lat;
+                            this.restaurantAdd.address.lon = reponseJS[0].lon;
+                            console.log(reponseJS[0].lat + ", " + reponseJS[0].lon);
+
+                            this.restaurantAdd.address.zipcode = reponseJS[0].address.postcode;
+
+                            this.restaurantAdd.address.building = reponseJS[0].address.house_number;
+
+                            if (reponseJS[0].address.city != null)
+                                this.restaurantAdd.borough = reponseJS[0].address.city;
+                            else if (reponseJS[0].address.town != null)
+                                this.restaurantAdd.borough = reponseJS[0].address.town;
+
+                            if (reponseJS[0].address.road != null)
+                                this.restaurantAdd.address.street = reponseJS[0].address.road;
+                            else if (reponseJS[0].address.pedestrian != null)
+                                this.restaurantAdd.address.street = reponseJS[0].address.pedestrian;
+
+                        }
+                    }
+                    else {
+                        this.showSnackbar = true;
+                    }
+                    // if (reponseJS.length > 0) {
+                    //     console.log(reponseJS[0].boundingbox);
+                    //     var corner1 = this.L.latLng(reponseJS[0].boundingbox[0], reponseJS[0].boundingbox[2]),
+                    //         corner2 = this.L.latLng(reponseJS[0].boundingbox[1], reponseJS[0].boundingbox[3]);
+                    //     this.mapAdd.fitBounds([corner1, corner2]);
+                    // }
+                    console.log(reponseJS);
+                } catch (err) {
+                    console.log("Erreur dans le fetchs get Nominatim " + err.msg);
+                }
+                console.log("Ville recherché");
+            }
         }
     };
 </script>
