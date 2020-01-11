@@ -13,7 +13,7 @@
                             <md-field md-clearable>
                                 <label for="adresse_search">Adresse</label>
                                 <md-input name="adresse_search" id="adresse_search" v-model="adresse_search"
-                                    v-on:keyup="delaySearchAddress()" />
+                                    v-on:keyup="delaySearchAddress()" v-on:keyup.enter="chercherInstant()"/>
                                 <span class="md-helper-text">Tout les éléments sont séparés par des espaces</span>
                             </md-field>
 
@@ -30,7 +30,7 @@
                     </md-card-header>
 
                     <md-card-content>
-                        <form>
+                        <!-- <form> -->
                             <div class="md-layout md-gutter">
                                 <div class="md-layout-item md-small-size-100">
                                     <md-field md-clearable>
@@ -96,11 +96,12 @@
                                     </md-field>
                                 </div>
                             </div>
-                        </form>
+                        <!-- </form> -->
                         <!-- lat : {{latAdd}}, lon : {{lonAdd}} -->
                     </md-card-content>
                     <md-card-actions>
-                        <md-button>Ajouter (ne fonctionne pas)</md-button>
+                        <md-button v-on:click="ajouterRestaurant()">Ajouter</md-button>
+                        <md-button v-on:click="changervue()">Change vue</md-button>
                     </md-card-actions>
                 </md-card>
             </div>
@@ -118,13 +119,17 @@
             <span>Aucune réponse</span>
             <md-button class="md-accent" @click="showSnackbar = false">Fermer</md-button>
         </md-snackbar>
+        <!-- <md-snackbar :md-duration="2000" :md-active.sync="showSnackbarChamps" md-persistent>
+            <span>Veuillez remplir touts les champs</span>
+            <md-button class="md-accent" @click="showSnackbar = false">Fermer</md-button>
+        </md-snackbar> -->
     </div>
 </template>
 
 <script>
     export default {
         name: "RestaurantAdd",
-        props: {},
+        props: ['showList'],
         computed: { // computed data, permet de définir des data "calculées"
             //   id() {
             //     // on y accèdera par {{id}} dans le template, et par this.id
@@ -250,6 +255,10 @@
                 clearTimeout(this.timerSearchAddress);
                 this.timerSearchAddress = setTimeout(this.searchInfoAddress, 1000);
             },
+            chercherInstant(){
+                clearTimeout(this.timerSearchAddress);
+                this.searchInfoAddress();
+            },
             async searchVille() {
                 console.log("recherche en cours");
                 // &format=json
@@ -331,6 +340,40 @@
                     console.log("Erreur dans le fetchs get Nominatim " + err.msg);
                 }
                 console.log("Ville recherché");
+            },
+            async ajouterRestaurant() {
+                let _create = {};
+
+                _create.name = this.restaurantAdd.name;
+                _create.cuisine = this.restaurantAdd.cuisine;
+                _create.borough = this.restaurantAdd.borough;
+                _create.address = {};
+                _create.address.building = this.restaurantAdd.address.building;
+                _create.address.street = this.restaurantAdd.address.street;
+                _create.address.zipcode = this.restaurantAdd.address.zipcode;
+                _create.address.coord = [];
+                _create.address.coord.push(this.restaurantAdd.address.lon);
+                _create.address.coord.push(this.restaurantAdd.address.lat);
+                _create.address.grades = [];
+
+                console.log(_create);
+
+                let reponseJSON = await fetch(this.apiURL, {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(_create)
+                })
+                let reponseJS = await reponseJSON.json();
+                console.log(reponseJS.msg);
+                this.$parent.showList = true;
+
+                // this.getDataFromServer(); // on rafraichit
+            },
+            changervue(){
+                this.$parent.showList = true;
             }
         }
     };

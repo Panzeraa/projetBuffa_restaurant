@@ -88,7 +88,7 @@
                     </md-table>
                 </div>
                 <div v-if="!showList">
-                    <RestaurantAdd class="open_restauAdd"></RestaurantAdd>
+                    <RestaurantAdd class="open_restauAdd" showList=showList></RestaurantAdd>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@
               <br>
               <div class="md-display-0 talign_center">Situé au {{restaurant.address.building}}
                 {{restaurant.address.street}}
-                ,{{restaurant.address.zipcode}}</div>
+                ,{{restaurant.address.zipcode}} {{restaurant.borough}}</div>
               <br>
               <!-- <div class="md-subheading mtop">Nom : <div class="md-headline">{{restaurant.name}}</div></div>
               <br>
