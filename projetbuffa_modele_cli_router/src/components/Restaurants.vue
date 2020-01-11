@@ -57,12 +57,21 @@
                             <md-button class="md-raised" v-on:click="pagePrecedente()" v-bind:disabled="page==0">
                                 Précédent
                             </md-button>
+                            <md-button v-if="page-2 >= 0" v-on:click="pageSelect(page-2)">{{page-2}}</md-button>
+                            <md-button v-if="page-1 >= 0" v-on:click="pageSelect(page-1)">{{page-1}}</md-button>
+                            <!-- <md-button class="color_black" disabled>{{page-1}}</md-button> -->
                             <md-button class="color_black" disabled>{{page}}</md-button>
+                            <md-button v-on:click="pageSelect(page+1)">{{page+1}}</md-button>
+                            <md-button v-on:click="pageSelect(page+2)">{{page+2}}</md-button>
+                            <md-button v-if="0 > page-2" v-on:click="pageSelect(page+3)">{{page+3}}</md-button>
+                            <md-button v-if="0 > page-1" v-on:click="pageSelect(page+4)">{{page+4}}</md-button>
+                            <!-- <md-button class="color_black" disabled>{{page+1}}</md-button> -->
 
                             <md-button class="md-raised" v-on:click="pageSuivante()"
                                 :disabled="page == nbPagesDeResultats">
                                 Suivant
                             </md-button>
+                            
                         </md-table-toolbar>
 
                         <md-table-empty-state md-label="No users found"
@@ -191,6 +200,11 @@
                 console.log("Page precedente");
                 this.page--;
                 this.getDataFromServer();
+            },
+            pageSelect(page){
+                console.log("Page " + page);
+                this.page = page;
+                this.getDataFromServer();
             }
         }
     };
@@ -200,6 +214,8 @@
 <style scoped>
     .color_black {
         color: black !important;
+        font-weight: bold;
+        background: whitesmoke;
     }
 
 

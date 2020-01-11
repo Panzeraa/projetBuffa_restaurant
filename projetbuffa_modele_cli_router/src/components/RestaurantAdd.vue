@@ -75,7 +75,7 @@
                                     <md-field md-clearable>
                                         <label for="restaurant_borough">Ville</label>
                                         <md-input name="restaurant_borough" id="restaurant_borough"
-                                            v-model="restaurantAdd.borough" v-on:keyup="delaySearch()" />
+                                            v-model="restaurantAdd.borough"/>
                                     </md-field>
                                 </div>
                             </div>
@@ -101,7 +101,6 @@
                     </md-card-content>
                     <md-card-actions>
                         <md-button v-on:click="ajouterRestaurant()">Ajouter</md-button>
-                        <md-button v-on:click="changervue()">Change vue</md-button>
                     </md-card-actions>
                 </md-card>
             </div>
@@ -354,7 +353,7 @@
                 _create.address.coord = [];
                 _create.address.coord.push(this.restaurantAdd.address.lon);
                 _create.address.coord.push(this.restaurantAdd.address.lat);
-                _create.address.grades = [];
+                _create.grades = [];
 
                 console.log(_create);
 
@@ -371,9 +370,6 @@
                 this.$parent.showList = true;
 
                 // this.getDataFromServer(); // on rafraichit
-            },
-            changervue(){
-                this.$parent.showList = true;
             }
         }
     };
