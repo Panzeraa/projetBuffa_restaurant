@@ -176,6 +176,8 @@
             //   //console.log("On va chercher les détails du restaurant id = " + this.$route.params.id);
             //   this.getDataFromServer(this.$route.params.id);
             this.initMap();
+            console.log("showList: " +this.$parent.showList);
+            console.log("idResto: " +this.$parent.idResto);
         },
         methods: {
             initMap() {

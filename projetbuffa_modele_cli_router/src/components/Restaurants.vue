@@ -82,13 +82,17 @@
                                     <md-icon md-label="Suppression">delete</md-icon>
                                 </button></md-table-cell>
                             <md-table-cell md-label="Modifier">
-                                <router-link :to="'restaurants/'+item._id">Modifier</router-link>
+                               <!-- <router-link :to="'restaurants/'+item._id">Modifier</router-link> -->
+                                <button v-on:click="modif(item._id)"><md-icon>edit</md-icon></button>
                             </md-table-cell>
                         </md-table-row>
                     </md-table>
                 </div>
-                <div v-if="!showList">
+                <!--<div v-if="!showList">
                     <RestaurantAdd class="open_restauAdd" showList=showList></RestaurantAdd>
+                </div>-->
+                <div v-if="!showList">
+                    <RestaurantUpdate class="open_restauUpdate" showUpdate=showUpdate></RestaurantUpdate>
                 </div>
             </div>
         </div>
@@ -101,15 +105,18 @@
 </template>
 
 <script>
-    import RestaurantAdd from './RestaurantAdd.vue'
+    //import RestaurantAdd from './RestaurantAdd.vue'
+    import RestaurantUpdate from './RestaurantUpdate.vue'
 
     export default {
         name: "Restaurants",
         components: {
-            RestaurantAdd
+            //RestaurantAdd
+            RestaurantUpdate
         },
         props: {
-            isUpdate: Boolean
+            isUpdate: Boolean,
+            idResto: String
         },
         data: function () {
             return {
@@ -122,7 +129,8 @@
                 nomRecherche: "",
                 nbPagesDeResultats: 0,
                 apiURL: "http://localhost:8081/api/restaurants",
-                showList: true
+                showList: true,
+                showUpdate: true
             };
         },
         mounted() {
@@ -130,6 +138,11 @@
             this.getDataFromServer();
         },
         methods: {
+            modif(id){
+                this.idResto = id;
+                this.showList = !this.showList;
+                //this.showUpdate = !this.showUpdate;
+            },
             displayList() {
                 this.showList = !this.showList;
             },
