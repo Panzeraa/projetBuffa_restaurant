@@ -42,6 +42,7 @@
               <div class="md-subheading ">Zipcode : {{restaurant.address.zipcode}}</div>
             </md-card-content>
           </md-card>
+          
 
 
 
@@ -73,6 +74,9 @@
               </md-table-row>
             </md-table>
           </div>
+          <router-link to="/restaurants">
+            <md-button class="md-raised" style="margin-left: 7px;">Back</md-button>
+          </router-link>
         </div>
         <div class="container_details talign_center" v-if="restaurant.name == null">
 
