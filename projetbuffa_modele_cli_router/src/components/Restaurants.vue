@@ -87,12 +87,12 @@
                             <md-table-cell md-label="Details">
                                 <router-link :to="'restaurants/'+item._id">Details</router-link>
                             </md-table-cell>
-                            <md-table-cell md-label="Supprimer"><button v-on:click="supprimerRestaurant(item._id)">
-                                    <md-icon md-label="Suppression">delete</md-icon>
-                                </button></md-table-cell>
                             <md-table-cell md-label="Modifier">
                                 <router-link :to="'restaurants/'+item._id">Modifier</router-link>
                             </md-table-cell>
+                            <md-table-cell md-label="Supprimer"><button v-on:click="supprimerRestaurant(item._id)">
+                                    <md-icon md-label="Suppression">delete</md-icon>
+                                </button></md-table-cell>
                         </md-table-row>
                     </md-table>
                 </div>
