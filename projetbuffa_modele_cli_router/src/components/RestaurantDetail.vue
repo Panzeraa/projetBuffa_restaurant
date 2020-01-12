@@ -562,8 +562,8 @@
   }
 
   .custom_header_menu {
-    height: 140px;
-    max-height: 140px;
+    height: 160px;
+    max-height: 160px;
     overflow-y: scroll;
   }
 

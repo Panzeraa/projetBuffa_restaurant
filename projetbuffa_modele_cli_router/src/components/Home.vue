@@ -1,15 +1,14 @@
 <template>
   <div>
     <div class="accueil_page">
-      <h1 class="title_acc">R-explorer</h1>
+      <h1 class="title_acc"><img class="acc_picture"
+        src="../../public/R_ico.png"
+        alt="Icone"> R-explorer</h1>
       <br>
-      <img class="acc_picture"
-     src="../../public/R_ico.png"
-     alt="Icone">
       <br>
       <h1>Bienvenue sur restaurant explorer</h1>
       <br>
-      <h1>Cliquez sur <router-link to="/restaurants">RESTAURANTS</router-link> pour acceder à la liste des restaurants</h1>
+      <h1><router-link to="/restaurants"> LISTE DES RESTAURANTS</router-link></h1>
     </div>
   </div>
 </template>
