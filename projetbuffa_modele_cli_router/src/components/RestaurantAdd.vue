@@ -29,7 +29,7 @@
                     <md-card-header>
                         <div class="md-title">Informations</div>
                         <span class="" style="color: rgba(0,0,0,0.54);
-                        font-size: 12px;">Cliquer sur la carte pour obtenir des informations</span>
+                        font-size: 12px;">Cliquez sur la carte pour obtenir des informations</span>
                     </md-card-header>
                     <md-card-content>
                         <!-- <form> -->

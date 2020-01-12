@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <md-toolbar class="md-dense">
+        <md-toolbar class="md-dense md-primary">
             <router-link to="/"><md-button>Home</md-button></router-link>
             <router-link to="/restaurants"><md-button>Restaurants</md-button></router-link>
         </md-toolbar>
