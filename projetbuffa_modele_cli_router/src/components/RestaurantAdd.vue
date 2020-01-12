@@ -2,7 +2,7 @@
     <div>
         <div class="md-layout full_height">
 
-            <div class="md-layout-item">
+            <div class="md-layout-item full_height_max md-scrollbar">
                 <md-card>
                     <md-card-header>
                         <div class="md-title">Recherche par adresse</div>

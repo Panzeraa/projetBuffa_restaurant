@@ -4,9 +4,9 @@
       <div class="md-layout-item full_height_max md-scrollbar">
         <div v-if="restaurant.name != null">
           <md-card>
-            <md-card-header>
+            <!-- <md-card-header>
               <div class="md-title">Informations</div>
-            </md-card-header>
+            </md-card-header> -->
 
             <md-card-content>
 
@@ -44,11 +44,20 @@
           </md-card>
 
           <md-card>
-            <md-card-header>
-              <div class="md-title">Menus</div>
+            <md-card-header >
+              <div>
+                <div style="float: right">
+                  <md-button class="md-icon-button md-raised" v-on:click="showMenuList = !showMenuList">
+                    <md-icon class="close_button" v-bind:class="{ close_button_menu: !showMenuList}">keyboard_arrow_up</md-icon>
+                  </md-button>
+                </div>
+                <div class="md-title">Menus</div>
+
+              </div>
+
             </md-card-header>
 
-            <md-card-content>
+            <md-card-content class="content_menu"  v-bind:class="{ close_content_menu: !showMenuList}" v-show="showMenuList">
               <div class="md-toolbar-row">
                 <md-tabs class="md-scondary">
                   <md-tab id="tab-entree" md-label="Entree" v-on:click="changeMenuView(0)"></md-tab>
@@ -56,16 +65,193 @@
                   <md-tab id="tab-dessert" md-label="Dessert" v-on:click="changeMenuView(2)"></md-tab>
                 </md-tabs>
               </div>
-              <div v-if="viewMenu == 0">
-                <div v-for="entree in menu.entree" v-bind:key="entree.name">
+              <div class="center_menu">
+                <div v-if="viewMenu == 0">
+                  <!-- <div v-for="entree in menuTransform.entree" v-bind:key="entree.name">
                   {{entree.name}}
+                </div> -->
+                  <!-- <md-card v-for="entree in menuTransform.entree" v-bind:key="entree.name">
+                  <md-card-media-cover md-text-scrim>
+                    <md-card-media md-ratio="16:9">
+                      <img alt="imageMenu" v-bind:src="entree.image">
+                    </md-card-media>
+
+                    <md-card-area>
+                      <md-card-header>
+                        <span class="md-title">{{entree.name}}</span>
+                        <span class="md-subhead">{{entree.description}} - {{entree.prix}}</span>
+                      </md-card-header>
+
+                      <md-card-actions>
+                        <md-button>Action</md-button>
+                        <md-button>Action</md-button>
+                      </md-card-actions>
+                    </md-card-area>
+                  </md-card-media-cover>
+                </md-card> -->
+
+                  <md-card class="custom_card_menu" v-for="entree in menuTransform.entree" v-bind:key="entree.name">
+                    <md-card-media md-ratio="16:9">
+                      <img v-bind:src="entree.image" alt="People">
+                    </md-card-media>
+
+                    <md-card-header class="custom_header_menu md-scrollbar">
+                      <div class="md-title">{{entree.name | capitalize }}</div>
+                      <div class="md-subhead">{{entree.description | capitalize }}</div>
+                    </md-card-header>
+
+                    <md-card-expand>
+                      <md-card-actions md-alignment="space-between">
+                        <div>
+                          <md-button class="md-icon-button" disabled>
+                            {{entree.prix}} €
+                          </md-button>
+                        </div>
+                        <div>
+                          <md-button class="md-icon-button md-raised md-primary">
+                            <md-icon>add</md-icon>
+                          </md-button>
+                        </div>
+                        <!-- <md-card-expand-trigger>
+                      </md-card-expand-trigger> -->
+                      </md-card-actions>
+
+
+                    </md-card-expand>
+                  </md-card>
+                  <!-- 
+                <md-card v-for="entree in menuTransform.entree" v-bind:key="entree.name">
+                  <md-card-media-cover md-solid>
+                    <md-card-media md-ratio="16:9">
+                      <img alt="imageMenu" v-bind:src="entree.image">
+                    </md-card-media>
+
+                    <md-card-area>
+                      <md-card-header>
+                        <span class="md-title">{{entree.name | capitalize }}</span>
+                        <span class="md-subhead">{{entree.description | capitalize }}</span>
+                      </md-card-header>
+                      <md-card-actions>
+
+                        <md-button class="md-icon-button" disabled>
+                          {{entree.prix}} €
+                        </md-button>
+                        <md-button class="md-icon-button">
+                          <md-icon>add</md-icon>
+                        </md-button>
+                      </md-card-actions>
+                    </md-card-area>
+                  </md-card-media-cover>
+                </md-card> -->
                 </div>
-              </div>
-              <div v-if="viewMenu == 1">
+                <div v-if="viewMenu == 1">
+                  <!-- <md-card class="custom_card_menu" v-for="entree in menuTransform.plat" v-bind:key="entree.name">
+                  <md-card-media-cover md-solid>
+                    <md-card-media md-ratio="16:9">
+                      <img alt="imageMenu" v-bind:src="entree.image">
+                    </md-card-media>
 
-              </div>
-              <div v-if="viewMenu == 2">
+                    <md-card-area>
+                      <md-card-header>
+                        <span class="md-title">{{entree.name | capitalize }}</span>
+                        <span class="md-subhead">{{entree.description | capitalize }}</span>
+                      </md-card-header>
+                      <md-card-actions>
 
+                        <md-button class="md-icon-button" disabled>
+                          {{entree.prix}} €
+                        </md-button>
+                        <md-button class="md-icon-button">
+                          <md-icon>add</md-icon>
+                        </md-button>
+                      </md-card-actions>
+                    </md-card-area>
+                  </md-card-media-cover>
+                </md-card> -->
+                  <md-card class="custom_card_menu" v-for="entree in menuTransform.plat" v-bind:key="entree.name">
+                    <md-card-media md-ratio="16:9">
+                      <img v-bind:src="entree.image" alt="People">
+                    </md-card-media>
+
+                    <md-card-header class="custom_header_menu md-scrollbar">
+                      <div class="md-title">{{entree.name | capitalize }}</div>
+                      <div class="md-subhead">{{entree.description | capitalize }}</div>
+                    </md-card-header>
+
+                    <md-card-expand>
+                      <md-card-actions md-alignment="space-between">
+                        <div>
+                          <md-button class="md-icon-button" disabled>
+                            {{entree.prix}} €
+                          </md-button>
+                        </div>
+                        <div>
+                          <md-button class="md-icon-button md-raised md-primary">
+                            <md-icon>add</md-icon>
+                          </md-button>
+                        </div>
+                        <!-- <md-card-expand-trigger>
+                      </md-card-expand-trigger> -->
+                      </md-card-actions>
+
+
+                    </md-card-expand>
+                  </md-card>
+                </div>
+                <div v-if="viewMenu == 2">
+                  <!-- <md-card v-for="entree in menuTransform.dessert" v-bind:key="entree.name">
+                  <md-card-media-cover md-solid>
+                    <md-card-media md-ratio="16:9">
+                      <img alt="imageMenu" v-bind:src="entree.image">
+                    </md-card-media>
+
+                    <md-card-area>
+                      <md-card-header>
+                        <span class="md-title">{{entree.name | capitalize }}</span>
+                        <span class="md-subhead">{{entree.description | capitalize }}</span>
+                      </md-card-header>
+                      <md-card-actions>
+
+                        <md-button class="md-icon-button" disabled>
+                          {{entree.prix}} €
+                        </md-button>
+                        <md-button class="md-icon-button">
+                          <md-icon>add</md-icon>
+                        </md-button>
+                      </md-card-actions>
+                    </md-card-area>
+                  </md-card-media-cover>
+                </md-card> -->
+                  <md-card class="custom_card_menu" v-for="entree in menuTransform.dessert" v-bind:key="entree.name">
+                    <md-card-media md-ratio="16:9">
+                      <img v-bind:src="entree.image" alt="People">
+                    </md-card-media>
+
+                    <md-card-header class="custom_header_menu md-scrollbar">
+                      <div class="md-title">{{entree.name | capitalize }}</div>
+                      <div class="md-subhead">{{entree.description | capitalize }}</div>
+                    </md-card-header>
+
+                    <md-card-expand>
+                      <md-card-actions md-alignment="space-between">
+                        <div>
+                          <md-button class="md-icon-button" disabled>
+                            {{entree.prix}} €
+                          </md-button>
+                        </div>
+                        <div>
+                          <md-button class="md-icon-button md-raised md-primary">
+                            <md-icon>add</md-icon>
+                          </md-button>
+                        </div>
+                        <!-- <md-card-expand-trigger>
+                      </md-card-expand-trigger> -->
+                      </md-card-actions>
+
+
+                    </md-card-expand>
+                  </md-card>
+                </div>
               </div>
             </md-card-content>
           </md-card>
@@ -103,7 +289,10 @@
             </md-table>
           </div>
           <router-link to="/restaurants">
-            <md-button class="md-raised" style="margin-left: 7px;">Back</md-button>
+            <md-button class="md-icon-button md-raised previous_button">
+              <md-icon>arrow_back</md-icon>
+            </md-button>
+            <!-- <md-button class="md-raised" style="margin-left: 7px;">Back</md-button> -->
           </router-link>
         </div>
         <div class="container_details talign_center" v-if="restaurant.name == null">
@@ -127,6 +316,13 @@
 <script>
   export default {
     name: "RestaurantDetail",
+    filters: {
+      capitalize: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+      }
+    },
     props: {},
     computed: { // computed data, permet de définir des data "calculées"
       id() {
@@ -151,37 +347,43 @@
         map: null,
         tileLayer: null,
         layers: [],
+        showMenuList: true,
         viewMenu: 0,
+        menuTransform: {},
         menu: {
           entree: [
-            { name: 'avocats mayonnaise' } ,
-            { name: 'le tartare de saint jacques' } ,
-            { name: 'loeuf "cocotte"' } ,
-            { name: 'salade césar' },
-            { name: 'salade de saumon' },
-            // [ 'le tartare de saint jacques', 'aux échalotes rôties et concombres', 'https://img-3.journaldesfemmes.fr/HqN1d0WRKGYaTXgz6iqxVrmrokE=/748x499/smart/e41e73b2fcc04fa6856cb0cc5d19605c/recipe-jdf/386682.jpg', 8],
-            // [ 'l\'oeuf "cocotte"', 'à la crème de morilles et jambon ibérique', 'https://img-3.journaldesfemmes.fr/-UyJc15xaSTjRUz3ed9q8tHwUhQ=/750x/smart/image-icu/10026294_1824786823.jpg', 9],
-            // [ 'salade césar', 'salade, blanc de volaille, sauce César, parmesan, tomate, croutons', 'https://static.cuisineaz.com/400x320/i135580-salade-cesar-allegee.jpeg', 10],
-            // [ 'salade de saumon', 'Salade verte, avocat, tomates, saumon mariné', 'https://www.adeline-cuisine.fr/wp-content/uploads/2016/08/salade-saumon-fume-avocat-tomate-oignon-ete-recette.jpg', 11]
+            // {
+            //   name: 'avocats mayonnaise'
+            //   description: ''
+            // },
+            // { name: 'le tartare de saint jacques' },
+            // { name: 'loeuf "cocotte"' },
+            // { name: 'salade césar' },
+            // { name: 'salade de saumon' },
+            ['avocats mayonnaise', 'avocat, mayonnaise, salade, tomate', 'https://www.fourchette-et-bikini.fr/sites/default/files/styles/full_320x256/public/8_avocats_farcis_crabe_mayonnaise.jpg?itok=5JZBv0KK', 7],
+            ['le tartare de saint jacques', 'aux échalotes rôties et concombres', 'https://img-3.journaldesfemmes.fr/HqN1d0WRKGYaTXgz6iqxVrmrokE=/748x499/smart/e41e73b2fcc04fa6856cb0cc5d19605c/recipe-jdf/386682.jpg', 8],
+            ['l\'oeuf "cocotte"', 'à la crème de morilles et jambon ibérique', 'https://img-3.journaldesfemmes.fr/-UyJc15xaSTjRUz3ed9q8tHwUhQ=/750x/smart/image-icu/10026294_1824786823.jpg', 9],
+            ['salade césar', 'salade, blanc de volaille, sauce César, parmesan, tomate, croutons', 'https://static.cuisineaz.com/400x320/i135580-salade-cesar-allegee.jpeg', 10],
+            ['salade de saumon', 'Salade verte, avocat, tomates, saumon mariné', 'https://www.adeline-cuisine.fr/wp-content/uploads/2016/08/salade-saumon-fume-avocat-tomate-oignon-ete-recette.jpg', 11]
           ],
           plat: [
-            ['plat', 'omelette jambon fromage', 'accompagnée d\'une salade', 'http://assets.kraftfoods.com/recipe_images/174487_STK_66616v0EC_WP.jpg', 13],
-            ['plat', 'confit de canard', 'accompagné de pommes de terre sarladaise', 'https://cache.marieclaire.fr/data/photo/w1000_c17/cuisine/137/confitdecanrad.jpg', 13],
-            ['plat', 'magret de canard', 'accompagné de pommes de terre sarladaise', 'https://fac.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Ffac.2F2018.2F07.2F30.2Fc59bd4cd-4f02-43e3-a450-360e224dfc87.2Ejpeg/748x372/quality/80/crop-from/center/magret-de-canard-aux-pommes.jpeg', 17],
-            ['plat', 'entrecôte', 'accompagné de frites', 'https://static.750g.com/images/1200-630/62981abcd38a437bafd35883e8aeff4d/entrecote-grillee-et-frites-maison.jpg', 17],
-            ['plat', 'burger périgourdin', 'tomates, steak, magret séché, mi-cuit, salade - Accompagné de frites', 'https://rians-restauration.com/sites/default/files/styles/recettes_full/public/images/recettes/burger_cabecou.png?itok=BntrRstm', 21],
-            ['plat', 'dos de lieu noir', 'sauce fruits de mer, accompagné de pommes de terre sarladaise', 'https://static.cuisineaz.com/400x320/i120860-filet-de-lieu-noir-au-four.jpeg', 23],
-            ['plat', 'assiette de foie gras mi-cuit', 'accompagné de toasts et salade', 'https://static.750g.com/images/622-auto/bc03d23d06b8a4efa83deb7f437b79f9/terrine-de-foie-gras-mi-cuit.jpg', 25],
-            ['plat', 'plat végétarien', 'boulgour provencal, crudité, salade, tomates', 'https://yummix.fr/wp-content/uploads/2019/06/salade-de-boulgour.jpg', 32],
-            ['plat', 'cassoulet périgourdin', 'perigourdin cassoulet', 'https://img.aws.la-croix.com/2015/02/20/1283108/Selon-legende-habitants-Castelnaudary-menaces-famine-Anglais-pendant-guerre-Cent-Ans-auraient-prepare-immenses-ragouts-jetant-dans-leur-marmite-tout-leur-restait_0_730_401.jpg', 38],
-            ['plat', 'plateau de fromages', 'emmental, conté, cantal, roquefort', 'https://www.lesmaisonsdufromage.fr/158-thickbox_default/plateau-de-fromage-10-personnes.jpg', 42],
+            ['omelette jambon fromage', 'accompagnée d\'une salade', 'http://assets.kraftfoods.com/recipe_images/174487_STK_66616v0EC_WP.jpg', 13],
+            ['confit de canard', 'accompagné de pommes de terre sarladaise', 'https://cache.marieclaire.fr/data/photo/w1000_c17/cuisine/137/confitdecanrad.jpg', 13],
+            ['magret de canard', 'accompagné de pommes de terre sarladaise', 'https://fac.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Ffac.2F2018.2F07.2F30.2Fc59bd4cd-4f02-43e3-a450-360e224dfc87.2Ejpeg/748x372/quality/80/crop-from/center/magret-de-canard-aux-pommes.jpeg', 17],
+            ['entrecôte', 'accompagné de frites', 'https://static.750g.com/images/1200-630/62981abcd38a437bafd35883e8aeff4d/entrecote-grillee-et-frites-maison.jpg', 17],
+            ['burger périgourdin', 'tomates, steak, magret séché, mi-cuit, salade - Accompagné de frites', 'https://rians-restauration.com/sites/default/files/styles/recettes_full/public/images/recettes/burger_cabecou.png?itok=BntrRstm', 21],
+            ['dos de lieu noir', 'sauce fruits de mer, accompagné de pommes de terre sarladaise', 'https://static.cuisineaz.com/400x320/i120860-filet-de-lieu-noir-au-four.jpeg', 23],
+            ['assiette de foie gras mi-cuit', 'accompagné de toasts et salade', 'https://static.750g.com/images/622-auto/bc03d23d06b8a4efa83deb7f437b79f9/terrine-de-foie-gras-mi-cuit.jpg', 25],
+            ['plat végétarien', 'boulgour provencal, crudité, salade, tomates', 'https://yummix.fr/wp-content/uploads/2019/06/salade-de-boulgour.jpg', 32],
+            ['cassoulet périgourdin', 'perigourdin cassoulet', 'https://img.aws.la-croix.com/2015/02/20/1283108/Selon-legende-habitants-Castelnaudary-menaces-famine-Anglais-pendant-guerre-Cent-Ans-auraient-prepare-immenses-ragouts-jetant-dans-leur-marmite-tout-leur-restait_0_730_401.jpg', 38],
+            ['plateau de fromages', 'emmental, conté, cantal, roquefort', 'https://www.lesmaisonsdufromage.fr/158-thickbox_default/plateau-de-fromage-10-personnes.jpg', 42],
           ],
           dessert: [
-            ['dessert', 'coupe 1 boules chantilly', 'citron, fraise, vanille, chocolat', 'https://media.toupargel.fr/r-687x390/603-1-coupe-glacee-nougat-framboise-535.jpg', 5],
-            ['dessert', 'coupe 2 boules chantilly\',\'citron, fraise, vanille, chocolat', 'https://media.toupargel.fr/r-687x390/603-1-coupe-glacee-nougat-framboise-535.jpg', '', 7],
-            ['dessert', 'fondant au chocolat', 'accompagné d\'une glace vanille, chantilly', 'https://i-reg.unimedias.fr/sites/art-de-vivre/files/styles/recipe/public/Import/coulant-fondant-chocolat_ss.jpg', 8],
-            ['dessert', 'panna cotta', 'fruit rouge ou vanille', 'https://img-3.journaldesfemmes.fr/fXl8B4z7psj92owpGkTheVRyz_o=/750x/smart/image-icu/10027809_2115190984.jpg', 10],
-            ['dessert', 'café gourmand', 'café, trio de vérine du jour', 'https://www.nestleprofessional.fr/sites/g/files/gfb141/f/styles/recipe/public/media/cafe_gourmand_3-3.jpg?itok=E9FYhseC', 12],
+            ['coupe 1 boules chantilly', 'citron, fraise, vanille, chocolat', 'https://media.toupargel.fr/r-687x390/603-1-coupe-glacee-nougat-framboise-535.jpg', 5],
+            ['coupe 2 boules chantilly', 'citron, fraise, vanille, chocolat', 'https://media.toupargel.fr/r-687x390/603-1-coupe-glacee-nougat-framboise-535.jpg', 7],
+            ['fondant au chocolat', 'accompagné d\'une glace vanille, chantilly', 'https://i-reg.unimedias.fr/sites/art-de-vivre/files/styles/recipe/public/Import/coulant-fondant-chocolat_ss.jpg', 8],
+            ['panna cotta', 'fruit rouge ou vanille', 'https://img-3.journaldesfemmes.fr/fXl8B4z7psj92owpGkTheVRyz_o=/750x/smart/image-icu/10027809_2115190984.jpg', 10],
+            ['café gourmand', 'café, trio de vérine du jour', 'https://www.nestleprofessional.fr/sites/g/files/gfb141/f/styles/recipe/public/media/cafe_gourmand_3-3.jpg?itok=E9FYhseC', 12],
           ]
         }
       };
@@ -192,8 +394,40 @@
       //console.log("On va chercher les détails du restaurant id = " + this.$route.params.id);
       this.getDataFromServer(this.$route.params.id);
       this.initMap();
+      this.transformMenudata();
     },
     methods: {
+      transformMenudata() {
+        let _menu = {};
+        this.menuTransform.entree = [];
+        this.menuTransform.plat = [];
+        this.menuTransform.dessert = [];
+        this.menu.entree.forEach(element => {
+          _menu = {};
+          _menu.name = element[0];
+          _menu.description = element[1];
+          _menu.image = element[2];
+          _menu.prix = element[3];
+          this.menuTransform.entree.push(_menu);
+        });
+        this.menu.plat.forEach(element => {
+          _menu = {};
+          _menu.name = element[0];
+          _menu.description = element[1];
+          _menu.image = element[2];
+          _menu.prix = element[3];
+          this.menuTransform.plat.push(_menu);
+        });
+        this.menu.dessert.forEach(element => {
+          _menu = {};
+          _menu.name = element[0];
+          _menu.description = element[1];
+          _menu.image = element[2];
+          _menu.prix = element[3];
+          this.menuTransform.dessert.push(_menu);
+        });
+        console.log(this.menuTransform);
+      },
       changeMenuView(i) {
         this.viewMenu = i;
       },
@@ -311,5 +545,53 @@
     top: 50%;
     left: 25%;
     transform: translate(-50%, -50%);
+  }
+
+  .custom_card_menu {
+    /* width: 320px; */
+    width: 21vw;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+  }
+
+  .center_menu {
+    display: inline-block;
+    text-align: center;
+  }
+
+  .custom_header_menu {
+    height: 140px;
+    max-height: 140px;
+    overflow-y: scroll;
+  }
+
+  .previous_button {
+    position: absolute;
+    top: 60px;
+    left: 15px;
+  }
+  .content_menu{
+    transition: all 2s ease;
+    /* max-height:30000px; */
+    /* overflow-y: auto; */
+    /* transform: scaleY(1); */
+    opacity: 1;
+  }
+  .close_content_menu{
+    /* max-height: 0px; */
+    /* transform: scaleY(0);
+    transform-origin: top;
+    display: none; */
+    /* overflow-y: hidden; */
+    opacity: 0;
+  }
+  .close_button{
+    transition: all 500ms ease;
+  }
+  .close_button_menu{
+    -webkit-transform: rotate(-180deg);
+
   }
 </style>

@@ -38,8 +38,8 @@
                 </md-field>
                 <p style="text-align: center;">
                     <md-button class="md-icon-button md-raised md-button_add" v-on:click="displayList()"
-                        v-bind:class="{ 'md-accent': !showList}">
-                        <div class="button_add" v-bind:class="{ displayed_add: !showList}">
+                        v-bind:class="{ 'md-accent': (showList == 1 || showList == 2)}">
+                        <div class="button_add" v-bind:class="{ displayed_add: (showList == 1 || showList == 2)}">
                             <md-icon>add</md-icon>
                         </div>
                     </md-button>
@@ -49,13 +49,14 @@
 
             </div>
             <div class="md-layout-item md-size-85">
-                <div v-show="showList">
+                <div v-show="showList == 0">
                     <md-table class="width_table full_height" md-height="100%" v-model="restaurants" md-sort="name"
                         md-sort-order="asc" md-card md-fixed-header>
                         <md-table-toolbar
                             style="display: inline-block; margin-top: 10px; text-align: center;  margin-bottom: -20px">
                             <md-button class="md-raised" v-on:click="pagePrecedente()" v-bind:disabled="page==0">
-                                Précédent
+                                <md-icon>navigate_before</md-icon>
+
                             </md-button>
                             <md-button v-if="page-2 >= 0" v-on:click="pageSelect(page-2)">{{page-2}}</md-button>
                             <md-button v-if="page-1 >= 0" v-on:click="pageSelect(page-1)">{{page-1}}</md-button>
@@ -69,9 +70,9 @@
 
                             <md-button class="md-raised" v-on:click="pageSuivante()"
                                 :disabled="page == nbPagesDeResultats">
-                                Suivant
+                                <md-icon>navigate_next</md-icon>
                             </md-button>
-                            
+
                         </md-table-toolbar>
 
                         <md-table-empty-state md-label="No users found"
@@ -84,23 +85,33 @@
                         <md-table-row slot="md-table-row" slot-scope="{ item }">
                             <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
                             <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{ item.cuisine }}</md-table-cell>
-                            <md-table-cell md-label="Details">
-                                <router-link :to="'restaurants/'+item._id">Details</router-link>
+                            <md-table-cell >
+                                <router-link :to="'restaurants/'+item._id">
+                                    <md-button class="md-icon-button md-raised md-secondary">
+                                        <md-icon md-label="Details">menu</md-icon>
+                                    </md-button>
+                                </router-link>
                             </md-table-cell>
-                            <md-table-cell md-label="Modifier">
-                               <!-- <router-link :to="'restaurants/'+item._id">Modifier</router-link> -->
-                                <button v-on:click="modif(item._id)"><md-icon>edit</md-icon></button>
+                            <md-table-cell >
+                                <!-- <router-link :to="'restaurants/'+item._id">Modifier</router-link> -->
+
+                                <md-button class="md-icon-button md-raised md-secondary" v-on:click="modif(item._id)">
+                                    <md-icon md-label="Edit">edit</md-icon>
+                                </md-button>
                             </md-table-cell>
-                            <md-table-cell md-label="Supprimer"><button v-on:click="supprimerRestaurant(item._id)">
+                            <md-table-cell >
+                                <md-button class="md-icon-button md-raised md-accent"
+                                    v-on:click="supprimerRestaurant(item._id)">
                                     <md-icon md-label="Suppression">delete</md-icon>
-                                </button></md-table-cell>
+                                </md-button>
+                            </md-table-cell>
                         </md-table-row>
                     </md-table>
                 </div>
-                <!--<div v-if="!showList">
+                <div v-if="showList == 1">
                     <RestaurantAdd class="open_restauAdd" showList=showList></RestaurantAdd>
-                </div>-->
-                <div v-if="!showList">
+                </div>
+                <div v-if="showList == 2">
                     <RestaurantUpdate class="open_restauUpdate" showUpdate=showUpdate></RestaurantUpdate>
                 </div>
             </div>
@@ -114,13 +125,13 @@
 </template>
 
 <script>
-    //import RestaurantAdd from './RestaurantAdd.vue'
+    import RestaurantAdd from './RestaurantAdd.vue'
     import RestaurantUpdate from './RestaurantUpdate.vue'
 
     export default {
         name: "Restaurants",
         components: {
-            //RestaurantAdd
+            RestaurantAdd,
             RestaurantUpdate
         },
         props: {
@@ -138,7 +149,7 @@
                 nomRecherche: "",
                 nbPagesDeResultats: 0,
                 apiURL: "http://localhost:8081/api/restaurants",
-                showList: true,
+                showList: 0,
                 showUpdate: true
             };
         },
@@ -147,13 +158,19 @@
             this.getDataFromServer();
         },
         methods: {
-            modif(id){
+            modif(id) {
                 this.idResto = id;
-                this.showList = !this.showList;
+                this.showList = 2;
                 //this.showUpdate = !this.showUpdate;
             },
             displayList() {
-                this.showList = !this.showList;
+                if (this.showList == 0) {
+                    this.showList = 1;
+                }
+                else if (this.showList == 1 || this.showList == 2) {
+                    this.showList = 0;
+                }
+
             },
             async getDataFromServer() {
                 // ici on fait un fetch pour récupérer des
@@ -214,7 +231,7 @@
                 this.page--;
                 this.getDataFromServer();
             },
-            pageSelect(page){
+            pageSelect(page) {
                 console.log("Page " + page);
                 this.page = page;
                 this.getDataFromServer();
