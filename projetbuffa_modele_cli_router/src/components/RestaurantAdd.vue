@@ -6,6 +6,7 @@
                 <md-card>
                     <md-card-header>
                         <div class="md-title">Recherche par adresse</div>
+
                     </md-card-header>
 
                     <md-card-content>
@@ -13,7 +14,7 @@
                             <md-field md-clearable>
                                 <label for="adresse_search">Adresse</label>
                                 <md-input name="adresse_search" id="adresse_search" v-model="adresse_search"
-                                    v-on:keyup="delaySearchAddress()" v-on:keyup.enter="chercherInstant()"/>
+                                    v-on:keyup="delaySearchAddress()" v-on:keyup.enter="chercherInstant()" />
                                 <span class="md-helper-text">Tout les éléments sont séparés par des espaces</span>
                             </md-field>
 
@@ -27,81 +28,81 @@
                 <md-card>
                     <md-card-header>
                         <div class="md-title">Informations</div>
+                        <span class="" style="color: rgba(0,0,0,0.54);
+                        font-size: 12px;">Cliquer sur la carte pour obtenir des informations</span>
                     </md-card-header>
-
                     <md-card-content>
                         <!-- <form> -->
-                            <div class="md-layout md-gutter">
-                                <div class="md-layout-item md-small-size-100">
-                                    <md-field md-clearable>
-                                        <label for="restaurant_name">Name</label>
-                                        <md-input name="restaurant_name" id="restaurant_name"
-                                            v-model="restaurantAdd.name" />
-                                    </md-field>
-                                </div>
-
-                                <div class="md-layout-item md-small-size-100">
-                                    <md-field md-clearable>
-                                        <label for="restaurant_cuisine">Cuisine</label>
-                                        <md-input name="restaurant_cuisine" id="restaurant_cuisine"
-                                            v-model="restaurantAdd.cuisine" />
-                                    </md-field>
-                                </div>
+                        <div class="md-layout md-gutter">
+                            <div class="md-layout-item md-small-size-100">
+                                <md-field md-clearable>
+                                    <label for="restaurant_name">Name</label>
+                                    <md-input name="restaurant_name" id="restaurant_name"
+                                        v-model="restaurantAdd.name" />
+                                </md-field>
                             </div>
-                            <div class="md-layout md-gutter">
-                                <div class="md-layout-item md-small-size-100">
-                                    <md-field md-clearable>
-                                        <label for="restaurant_building">Numero</label>
-                                        <md-input name="restaurant_building" id="restaurant_building"
-                                            v-model="restaurantAdd.address.building" />
-                                    </md-field>
-                                </div>
 
-                                <div class="md-layout-item md-small-size-100">
-                                    <md-field md-clearable>
-                                        <label for="restaurant_street">Adresse</label>
-                                        <md-input name="restaurant_street" id="restaurant_street"
-                                            v-model="restaurantAdd.address.street" />
-                                    </md-field>
-                                </div>
-                                <div class="md-layout-item md-small-size-100">
-                                    <md-field md-clearable>
-                                        <label for="restaurant_zipcode">Code postale</label>
-                                        <md-input name="restaurant_zipcode" id="restaurant_zipcode"
-                                            v-model="restaurantAdd.address.zipcode" />
-                                    </md-field>
-                                </div>
-                                <div class="md-layout-item md-small-size-100">
-                                    <md-field md-clearable>
-                                        <label for="restaurant_borough">Ville</label>
-                                        <md-input name="restaurant_borough" id="restaurant_borough"
-                                            v-model="restaurantAdd.borough" v-on:keyup="delaySearch()" />
-                                    </md-field>
-                                </div>
+                            <div class="md-layout-item md-small-size-100">
+                                <md-field md-clearable>
+                                    <label for="restaurant_cuisine">Cuisine</label>
+                                    <md-input name="restaurant_cuisine" id="restaurant_cuisine"
+                                        v-model="restaurantAdd.cuisine" />
+                                </md-field>
                             </div>
-                            <div class="md-layout md-gutter">
-                                <div class="md-layout-item md-small-size-100">
-                                    <md-field>
-                                        <label for="restaurant_latitude">Latitude</label>
-                                        <md-input disabled name="restaurant_latitude" id="restaurant_latitude"
-                                            v-model="restaurantAdd.address.lat" />
-                                    </md-field>
-                                </div>
+                        </div>
+                        <div class="md-layout md-gutter">
+                            <div class="md-layout-item md-small-size-100">
+                                <md-field md-clearable>
+                                    <label for="restaurant_building">Numero</label>
+                                    <md-input name="restaurant_building" id="restaurant_building"
+                                        v-model="restaurantAdd.address.building" />
+                                </md-field>
+                            </div>
 
-                                <div class="md-layout-item md-small-size-100">
-                                    <md-field>
-                                        <label for="restaurant_longitudee">Longitude</label>
-                                        <md-input disabled name="restaurant_longitudee" id="restaurant_longitudee"
-                                            v-model="restaurantAdd.address.lon" />
-                                    </md-field>
-                                </div>
+                            <div class="md-layout-item md-small-size-100">
+                                <md-field md-clearable>
+                                    <label for="restaurant_street">Adresse</label>
+                                    <md-input name="restaurant_street" id="restaurant_street"
+                                        v-model="restaurantAdd.address.street" />
+                                </md-field>
                             </div>
+                            <div class="md-layout-item md-small-size-100">
+                                <md-field md-clearable>
+                                    <label for="restaurant_zipcode">Code postale</label>
+                                    <md-input name="restaurant_zipcode" id="restaurant_zipcode"
+                                        v-model="restaurantAdd.address.zipcode" />
+                                </md-field>
+                            </div>
+                            <div class="md-layout-item md-small-size-100">
+                                <md-field md-clearable>
+                                    <label for="restaurant_borough">Ville</label>
+                                    <md-input name="restaurant_borough" id="restaurant_borough"
+                                        v-model="restaurantAdd.borough" />
+                                </md-field>
+                            </div>
+                        </div>
+                        <div class="md-layout md-gutter">
+                            <div class="md-layout-item md-small-size-100">
+                                <md-field>
+                                    <label for="restaurant_latitude">Latitude</label>
+                                    <md-input disabled name="restaurant_latitude" id="restaurant_latitude"
+                                        v-model="restaurantAdd.address.lat" />
+                                </md-field>
+                            </div>
+
+                            <div class="md-layout-item md-small-size-100">
+                                <md-field>
+                                    <label for="restaurant_longitudee">Longitude</label>
+                                    <md-input disabled name="restaurant_longitudee" id="restaurant_longitudee"
+                                        v-model="restaurantAdd.address.lon" />
+                                </md-field>
+                            </div>
+                        </div>
                         <!-- </form> -->
                         <!-- lat : {{latAdd}}, lon : {{lonAdd}} -->
                     </md-card-content>
                     <md-card-actions>
                         <md-button v-on:click="ajouterRestaurant()">Ajouter</md-button>
-                        <md-button v-on:click="changervue()">Change vue</md-button>
                     </md-card-actions>
                 </md-card>
             </div>
@@ -257,7 +258,7 @@
                 clearTimeout(this.timerSearchAddress);
                 this.timerSearchAddress = setTimeout(this.searchInfoAddress, 1000);
             },
-            chercherInstant(){
+            chercherInstant() {
                 clearTimeout(this.timerSearchAddress);
                 this.searchInfoAddress();
             },
@@ -356,7 +357,7 @@
                 _create.address.coord = [];
                 _create.address.coord.push(this.restaurantAdd.address.lon);
                 _create.address.coord.push(this.restaurantAdd.address.lat);
-                _create.address.grades = [];
+                _create.grades = [];
 
                 console.log(_create);
 
@@ -373,9 +374,6 @@
                 this.$parent.showList = true;
 
                 // this.getDataFromServer(); // on rafraichit
-            },
-            changervue(){
-                this.$parent.showList = true;
             }
         }
     };
