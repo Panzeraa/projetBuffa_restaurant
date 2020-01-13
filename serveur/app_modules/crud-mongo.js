@@ -185,7 +185,7 @@ exports.updateRestaurant = function(id, formData, callback) {
 
 
 			db.collection("restaurants")
-			.replaceOne(myquery, newvalues, function(err, result) {
+			.replaceOne(myquery, { $set: newvalues}, function(err, result) {
 	         	if(!err){
 			    	reponse = {
 		                succes : true,
