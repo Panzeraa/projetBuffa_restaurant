@@ -1,7 +1,10 @@
 <template>
     <div id="app">
-        <md-toolbar class="md-dense md-primary">
-            <router-link to="/"><md-button>Home</md-button></router-link>
+        <md-toolbar class="md-dense md-primary custom_toolbar">
+            <img class="img_logo"
+                src="../public/R_ico_text_white.png"
+                alt="Icone">
+            <router-link to="/"><md-button>Accueil</md-button></router-link>
             <router-link to="/restaurants"><md-button>Restaurants</md-button></router-link>
         </md-toolbar>
 
@@ -62,5 +65,11 @@
     .full_height_max{
         max-height: calc(100vh - 48px);
         overflow-y: auto;
+    }
+    .img_logo{
+        height: 35px!important;
+    }
+    .custom_toolbar{
+        background-color: rgb(10, 144, 10)!important;
     }
 </style>

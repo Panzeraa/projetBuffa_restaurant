@@ -2,8 +2,8 @@
   <div>
     <div class="accueil_page">
       <h1 class="title_acc"><img class="acc_picture"
-        src="../../public/R_ico.png"
-        alt="Icone"> R-explorer</h1>
+        src="../../public/R_ico_text.png"
+        alt="Icone"></h1>
       <br>
       <br>
       <h1>Bienvenue sur restaurant explorer</h1>

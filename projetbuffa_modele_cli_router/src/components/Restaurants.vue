@@ -88,7 +88,7 @@
                             <md-table-cell >
                                 <router-link :to="'restaurants/'+item._id">
                                     <md-button class="md-icon-button md-raised md-secondary">
-                                        <md-icon md-label="Details">menu</md-icon>
+                                        <md-icon md-label="Details">more_horiz</md-icon>
                                     </md-button>
                                 </router-link>
                             </md-table-cell>
@@ -270,6 +270,11 @@
     .sidebar {
         /* max-width: 15vw; */
         padding: 10px;
+        /* background-image:url(../../public/R_ico.png);
+        background-position:center center;
+        
+        background-size: 15vw;
+        background-repeat: no-repeat; */
     }
 
     .to_bottom {
