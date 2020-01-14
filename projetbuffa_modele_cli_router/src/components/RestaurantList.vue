@@ -37,7 +37,7 @@
                     </md-select>
                 </md-field>
                 <p style="text-align: center;">
-                    <md-button class="md-icon-button md-raised md-button_add" v-on:click="displayList()"
+                    <md-button class="md-icon-button md-raised md-button_add" v-on:click="displayList(); getDataFromServer()"
                         v-bind:class="{ 'md-accent': (showList == 1 || showList == 2)}">
                         <div class="button_add" v-bind:class="{ displayed_add: (showList == 1 || showList == 2)}">
                             <md-icon>add</md-icon>
