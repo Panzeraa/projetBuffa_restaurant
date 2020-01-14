@@ -102,8 +102,12 @@
                         <!-- lat : {{latAdd}}, lon : {{lonAdd}} -->
                     </md-card-content>
                     <md-card-actions>
-                        <md-button v-on:click="ajouterRestaurant()">Ajouter</md-button>
+                        <md-button v-on:click="ajouterRestaurant(); alertadd = true">Ajouter</md-button>
                     </md-card-actions>
+                    <md-dialog-alert
+                            :md-active.sync="alertadd"
+                            md-title="Post created!"
+                            md-content="Your restaurant has been created." />
                 </md-card>
             </div>
             <div class="md-layout-item">
@@ -141,7 +145,7 @@
         data: function () {
             return {
                 showSnackbar: false,
-
+                alertadd: false,
                 L: null,
                 adresse_search: null,
                 restaurantAdd: {
