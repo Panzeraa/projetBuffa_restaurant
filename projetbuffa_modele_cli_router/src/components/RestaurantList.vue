@@ -101,13 +101,22 @@
                             </md-table-cell>
                             <md-table-cell >
                                 <md-button class="md-icon-button md-raised md-accent"
-                                    v-on:click="supprimerRestaurant(item._id)">
+                                    v-on:click="alertDelete = true; idDelete = item._id">
                                     <md-icon md-label="Suppression">delete</md-icon>
                                 </md-button>
+
                             </md-table-cell>
                         </md-table-row>
                     </md-table>
                 </div>
+                <md-dialog-confirm
+                        :md-active.sync="alertDelete"
+                        md-title="Delete restaurant"
+                        md-content="Confirm the delete ? "
+                        md-confirm-text="Yes"
+                        md-cancel-text="No"
+                        @md-cancel="alertDelete = false"
+                        @md-confirm="supprimerRestaurant(idDelete)" />
                 <div v-if="showList == 1">
                     <RestaurantAdd class="open_restauAdd" showList=showList></RestaurantAdd>
                 </div>
@@ -140,6 +149,8 @@
         },
         data: function () {
             return {
+                idDelete: null,
+                alertDelete: false,
                 restaurants: [],
                 nbRestaurants: 0,
                 nom: "",

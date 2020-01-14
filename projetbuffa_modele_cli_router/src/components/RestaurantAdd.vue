@@ -106,7 +106,7 @@
                     </md-card-actions>
                     <md-dialog-alert
                             :md-active.sync="alertadd"
-                            md-title="Post created!"
+                            md-title="Restaurant created!"
                             md-content="Your restaurant has been created." />
                 </md-card>
             </div>
