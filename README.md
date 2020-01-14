@@ -1,6 +1,6 @@
 # Restaurant project
  
-[Rfinder](#) is a restaurant manager in which we can consult thousands of restaurants, modify and delete their content
+[Rfinder](http://vue-rfinder.herokuapp.com/) is a restaurant manager in which we can consult thousands of restaurants, modify and delete their content
 
 ## Authors
 
